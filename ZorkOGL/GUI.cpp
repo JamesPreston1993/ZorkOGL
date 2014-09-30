@@ -1,6 +1,7 @@
 #include "GUI.h"
 #include <SDL.h>
 #include "SDL_opengl.h"
+#include <SDL_ttf.h>
 
 SDL_Window* window;
 SDL_Renderer* renderer;

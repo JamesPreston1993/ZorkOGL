@@ -28,7 +28,7 @@ void GUI::setupWindow()
 	// Set up display
 	SDL_Init(SDL_INIT_VIDEO);
 	TTF_Init();
-	window = SDL_CreateWindow("ZorkOGL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenWidth, screenHeight, 0);	
+	window = SDL_CreateWindow("ZorkOGL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenWidth, screenHeight, 0);
 }
 void GUI::setupRenderer()
 {
@@ -78,41 +78,11 @@ void GUI::drawPlayer(Player player)
 	SDL_Rect* pictureRect = new SDL_Rect();
 	pictureRect->x = startX + margin;
 	pictureRect->y = startY + margin;
-	pictureRect->w = width / 3 - (margin / 2);
+	pictureRect->w = width / 2 - margin;
 	pictureRect->h = height - (2 * margin);
 	SDL_RenderFillRect(renderer, pictureRect);
 
-	TTF_Font* font = TTF_OpenFont("TerminusTTF-4.39.ttf", 32);
-	if(font == NULL)
-	{
-		cerr << "Font error: " << TTF_GetError() << endl;
-		TTF_Quit();
-		SDL_Quit();
-		exit(0);
-	}
-	SDL_Color textColor = {255, 255, 255};
-	SDL_Surface* surface = TTF_RenderText_Solid(font, player.getName().c_str(), textColor);
-	if(surface == NULL)
-	{
-		cerr << "Surface error: " << TTF_GetError() << endl;
-		TTF_Quit();
-		SDL_Quit();
-		exit(1);
-	}
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-
-	SDL_Rect* title = new SDL_Rect();
-	title->x = startX + (2 * margin) + pictureRect->w;
-	title->y = startY;
-	title->w = pictureRect->w;
-	title->h = 32;
-
-	SDL_RenderCopy(renderer,texture, NULL, title);
-	flush();
-
-	SDL_DestroyTexture(texture);
-	SDL_FreeSurface(surface);
-	TTF_CloseFont(font);
+	drawStats(startX, startY, pictureRect->w, pictureRect->h, player);
 }
 
 /* Need to implement Enemy class
@@ -185,7 +155,7 @@ void GUI::drawOptions()
 	// Set render color to medium grey
 	SDL_SetRenderDrawColor(renderer, 10, 10, 10, 255 );	
 	
-	width = (220 - (4 * margin)) / 3;
+	width = (220 - (5 * margin)) / 3;
 	height = width;
 	for(int col = 0; col < 3 * width; col+=width + margin)
 	{
@@ -198,62 +168,72 @@ void GUI::drawOptions()
 			invRect->h = height;
 			SDL_RenderFillRect(renderer, invRect);
 		}
-	}
-
-	/*
-	GLint startX = screenWidth / 3;
-	GLint startY = screenHeight - 220;
-	GLint endX = 2 * (screenWidth / 3);
-	GLint endY = screenHeight - margin;
-
-	glPushMatrix();
-	
-	glOrtho(0, screenWidth, screenHeight ,0, -1, 1);
-
-	glColor3f(0.25, 0.25, 0.25);
-	
-	glBegin(GL_QUADS);
-		glVertex2f(startX + margin, startY + margin);
-		glVertex2f(endX - margin, startY + margin);
-		glVertex2f(endX - margin, endY - margin);
-		glVertex2f(startX + margin, endY - margin);
-	glEnd();	
-
-	glColor3f(0.1, 0.1, 0.1);
-	for(int col = 0; col < 3 * 64; col+=64 + margin)
-	{
-		for(int row = 0; row < 3 * 64; row+=64 + margin)
-		{
-			glBegin(GL_QUADS);
-				glVertex2f(startX + row + (2 * margin), startY + col + (2 * margin));
-				glVertex2f(startX + row + 64 + (2 * margin), startY + col + (2 * margin));
-				glVertex2f(startX + row + 64 + (2 * margin), startY + col + 64 + (2 * margin));
-				glVertex2f(startX + row + (2 * margin), startY + col + 64 + (2 * margin));
-			glEnd();
-		}
-	}
-
-	glPopMatrix();	
-	glPushMatrix();
-	
-	glOrtho(0,1280,720,0,-1,1);
-
-	glColor3f(0.25, 0.25, 0.25);
-	
-	glBegin(GL_QUADS);
-		glVertex2f(425, 475);
-		glVertex2f(845, 475);
-		glVertex2f(845, 715);
-		glVertex2f(425, 715);
-	glEnd();
-
-	glPopMatrix();
-	*/
+	}	
 }
 
-void GUI::drawStats(int x, int y, Character c)
+void GUI::drawStats(int x, int y, int w, int h, Character c)
 {
+	TTF_Font* font = TTF_OpenFont("TerminusTTF-4.39.ttf", 18);
+	if(font == NULL)
+	{
+		cerr << "Font error: " << TTF_GetError() << endl;
+		TTF_Quit();
+		SDL_Quit();
+		exit(0);
+	}
+	SDL_Color textColor = {255, 255, 255};
+	
+	for(int i = 0; i < 6; i++)
+	{
+		std::string message;
+		switch(i)
+		{
+			case 0 : 
+				message = c.getName();
+				break;
+			case 1 :
+				message = "STR: " + std::to_string(c.getStrength());
+				break;
+			case 2 :
+				message = "AGL: " + std::to_string(c.getAgility());
+				break;
+			case 3 :
+				message = "END: " + std::to_string(c.getEndurance());
+				break;
+			case 4 : 
+				message = "CHA: " + std::to_string(c.getCharisma());
+				break;
+			case 5 :
+				message = "HP: " + std::to_string(c.getHealth()); 
+				break;
+			default:
+				message = "";
+				break;
+		}
+		SDL_Surface* surface = TTF_RenderText_Solid(font, message.c_str(), textColor);
+		if(surface == NULL)
+		{
+			cerr << "Surface error: " << TTF_GetError() << endl;
+			TTF_Quit();
+			SDL_Quit();
+			exit(1);
+		}
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
+		SDL_Rect* title = new SDL_Rect();
+		title->x = x + (2 * margin) + w;
+		title->y = y + ((h / 6) * i);
+		title->w = w;
+		title->h = h / 6;
+
+		SDL_RenderCopy(renderer,texture, NULL, title);
+	}
+
+	flush();
+
+	//SDL_DestroyTexture(texture);
+	//SDL_FreeSurface(surface);
+	//TTF_CloseFont(font);
 }
 
 void GUI::drawGameScreen()
@@ -272,41 +252,4 @@ void GUI::drawGameScreen()
 	mainRect->w = width;
 	mainRect->h = height;
 	SDL_RenderFillRect(renderer, mainRect);
-
-	/*
-	GLint startX = 0;
-	GLint startY = 0;
-	GLint endX = screenWidth;
-	GLint endY = screenHeight - 220;
-
-	glPushMatrix();
-	
-	glOrtho(0, screenWidth, screenHeight ,0, -1, 1);
-
-	glColor3f(0.75, 0.75, 0.75);
-	
-	glBegin(GL_QUADS);
-		glVertex2f(startX + margin, startY + margin);
-		glVertex2f(endX - margin, startY + margin);
-		glVertex2f(endX - margin, endY - margin);
-		glVertex2f(startX + margin, endY - margin);
-	glEnd();
-
-	glPopMatrix();
-
-	glPushMatrix();	
-
-	glOrtho(0,1280,720,0,-1,1);
-	
-	glColor3f(0.5, 0.5, 0.5);
-	
-	glBegin(GL_QUADS);
-		glVertex2f(5, 5);
-		glVertex2f(1275, 5);
-		glVertex2f(1275, 470);
-		glVertex2f(5, 470);
-	glEnd();
-
-	glPopMatrix();
-	*/
 }

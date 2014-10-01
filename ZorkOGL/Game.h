@@ -7,9 +7,6 @@ public:
 	virtual void run();
 
 private:
-	bool isRunning;
-	void setupWindow();
-	void setupRenderer();
-	void listenForEvents();
+	bool isRunning;	
 };
 

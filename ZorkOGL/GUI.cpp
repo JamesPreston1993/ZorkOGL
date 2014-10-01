@@ -2,6 +2,10 @@
 #include <SDL.h>
 #include "SDL_opengl.h"
 #include <SDL_ttf.h>
+#include <iostream>
+
+using std::cerr;
+using std::endl;
 
 SDL_Window* window;
 SDL_Renderer* renderer;
@@ -23,6 +27,7 @@ void GUI::setupWindow()
 {
 	// Set up display
 	SDL_Init(SDL_INIT_VIDEO);
+	TTF_Init();
 	window = SDL_CreateWindow("ZorkOGL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenWidth, screenHeight, 0);	
 }
 void GUI::setupRenderer()
@@ -31,10 +36,10 @@ void GUI::setupRenderer()
 	renderer =  SDL_CreateRenderer(window, 0, SDL_RENDERER_ACCELERATED);	
     
 	// Set render color to dark grey
-    SDL_SetRenderDrawColor(renderer, 25.5, 25.5, 25.5, 255 );
+    SDL_SetRenderDrawColor(renderer, 25, 25, 25, 255 );
 		
 	// Flush
-	SDL_RenderPresent(renderer);
+	flush();
 }
 void GUI::flush()
 {
@@ -73,9 +78,41 @@ void GUI::drawPlayer(Player player)
 	SDL_Rect* pictureRect = new SDL_Rect();
 	pictureRect->x = startX + margin;
 	pictureRect->y = startY + margin;
-	pictureRect->w = width / 2 - (margin / 2);
+	pictureRect->w = width / 3 - (margin / 2);
 	pictureRect->h = height - (2 * margin);
 	SDL_RenderFillRect(renderer, pictureRect);
+
+	TTF_Font* font = TTF_OpenFont("TerminusTTF-4.39.ttf", 32);
+	if(font == NULL)
+	{
+		cerr << "Font error: " << TTF_GetError() << endl;
+		TTF_Quit();
+		SDL_Quit();
+		exit(0);
+	}
+	SDL_Color textColor = {255, 255, 255};
+	SDL_Surface* surface = TTF_RenderText_Solid(font, player.getName().c_str(), textColor);
+	if(surface == NULL)
+	{
+		cerr << "Surface error: " << TTF_GetError() << endl;
+		TTF_Quit();
+		SDL_Quit();
+		exit(1);
+	}
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+	SDL_Rect* title = new SDL_Rect();
+	title->x = startX + (2 * margin) + pictureRect->w;
+	title->y = startY;
+	title->w = pictureRect->w;
+	title->h = 32;
+
+	SDL_RenderCopy(renderer,texture, NULL, title);
+	flush();
+
+	SDL_DestroyTexture(texture);
+	SDL_FreeSurface(surface);
+	TTF_CloseFont(font);
 }
 
 /* Need to implement Enemy class
@@ -212,6 +249,11 @@ void GUI::drawOptions()
 
 	glPopMatrix();
 	*/
+}
+
+void GUI::drawStats(int x, int y, Character c)
+{
+
 }
 
 void GUI::drawGameScreen()

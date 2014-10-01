@@ -12,6 +12,7 @@ public:
 	void drawOpponent();
 	void drawOptions();
 	void drawGameScreen();
+	void drawStats(int x, int y, Character c);
 	void flush();
 	void clear();
 private:

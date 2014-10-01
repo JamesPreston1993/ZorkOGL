@@ -83,7 +83,7 @@ void Game::run()
 	GUI gui(1280, 720);
 	gui.setupWindow();
 	gui.setupRenderer();
-	Player player("James", 1, 2, 5, 6);
+	Player player("Oisín", 1, 2, 5, 6);
 	while(isRunning)
 	{
 		// Listen
@@ -92,7 +92,9 @@ void Game::run()
 			isRunning = false;
 		}
 		
-		// Render										
+		// Render
+		// TODO: Check if any changes have been made before rendering (improved performance)
+
 		gui.drawPlayer(player);
 		gui.drawOptions();
 		gui.drawOpponent();

@@ -3,6 +3,7 @@
 class Character
 {
 public:
+	Character();
 	Character(std::string name, int strength, int agility, int endurance, int charisma);
 	~Character(void);
 

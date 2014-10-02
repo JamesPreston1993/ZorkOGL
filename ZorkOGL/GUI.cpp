@@ -7,20 +7,26 @@
 using std::cerr;
 using std::endl;
 
-SDL_Window* window;
-SDL_Renderer* renderer;
+int panelWidth; 
+int panelHeight;
 
 GUI::GUI(GLint width, GLint height)
 {
 	screenWidth = width;
 	screenHeight = height;
 	margin = 3;
+	panelWidth = (screenWidth - (4 * margin)) / 3;
+	panelHeight = 220;
 }
 
 
 GUI::~GUI(void)
 {
-
+	clear();
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	TTF_Quit();
+	SDL_Quit();
 }
 
 void GUI::setupWindow()
@@ -53,7 +59,7 @@ void GUI::clear()
 	SDL_RenderClear(renderer);
 }
 
-void GUI::drawPlayer(Player player)
+void GUI::drawPlayer(Player* player)
 {
 	int startX = margin;
 	int startY = screenHeight - 220;
@@ -83,36 +89,22 @@ void GUI::drawPlayer(Player player)
 	SDL_RenderFillRect(renderer, pictureRect);
 
 	drawStats(startX, startY, pictureRect->w, pictureRect->h, player);
+
+	delete pictureRect;
+	delete mainRect;
 }
 
 /* Need to implement Enemy class
 void GUI::drawOpponent(Enemy enemy)
 {
-	glPushMatrix();
 	
-	glOrtho(0,1280,720,0,-1,1);
-
-	glColor3f(0.25, 0.25, 0.25);
-	
-	glBegin(GL_QUADS);
-		glVertex2f(850, 475);
-		glVertex2f(1275, 475);
-		glVertex2f(1275, 715);
-		glVertex2f(850, 715);
-	glEnd();
-
-	glPopMatrix();
 }
 */
 
 void GUI::drawOpponent()
-{
-	int width = (screenWidth - (4 * margin)) / 3;
-	int height = 220 - margin;
-	int startX = (3 * margin) + (2 * width);
+{	
+	int startX = (3 * margin) + (2 * panelWidth);
 	int startY = screenHeight - 220;
-	
-	// Draw the holder rectangle
 
 	// Set render color to medium grey
     SDL_SetRenderDrawColor(renderer, 65, 65, 65, 255 );
@@ -120,19 +112,22 @@ void GUI::drawOpponent()
 	SDL_Rect* mainRect = new SDL_Rect();
 	mainRect->x = startX;
 	mainRect->y = startY;
-	mainRect->w = width;
-	mainRect->h = height;
+	mainRect->w = panelWidth;
+	mainRect->h = panelHeight - margin;
 	SDL_RenderFillRect(renderer, mainRect);
 
 	// Set render color to dark grey
     SDL_SetRenderDrawColor(renderer, 10, 10, 10, 255 );
 
 	SDL_Rect* pictureRect = new SDL_Rect();
-	pictureRect->x = startX + (width / 2) - (margin / 2);
+	pictureRect->x = startX + (panelWidth / 2) - (margin / 2);
 	pictureRect->y = startY + margin;
-	pictureRect->w = width / 2 - (margin / 2);
-	pictureRect->h = height - (2 * margin);
-	SDL_RenderFillRect(renderer, pictureRect);	
+	pictureRect->w = panelWidth / 2 - (margin / 2);
+	pictureRect->h = panelHeight - (3 * margin);
+	SDL_RenderFillRect(renderer, pictureRect);
+	
+	delete pictureRect;
+	delete mainRect;
 }
 
 void GUI::drawOptions()
@@ -157,6 +152,7 @@ void GUI::drawOptions()
 	
 	width = (220 - (5 * margin)) / 3;
 	height = width;
+
 	for(int col = 0; col < 3 * width; col+=width + margin)
 	{
 		for(int row = 0; row < 3 * height; row += height + margin)
@@ -167,11 +163,13 @@ void GUI::drawOptions()
 			invRect->w = width;
 			invRect->h = height;
 			SDL_RenderFillRect(renderer, invRect);
+			delete invRect;
 		}
 	}	
+	delete mainRect;
 }
 
-void GUI::drawStats(int x, int y, int w, int h, Character c)
+void GUI::drawStats(int x, int y, int w, int h, Character* c)
 {
 	TTF_Font* font = TTF_OpenFont("TerminusTTF-4.39.ttf", 18);
 	if(font == NULL)
@@ -181,36 +179,41 @@ void GUI::drawStats(int x, int y, int w, int h, Character c)
 		SDL_Quit();
 		exit(0);
 	}
-	SDL_Color textColor = {255, 255, 255};
 	
+	SDL_Color textColor = {255, 255, 255};
+	SDL_Surface* surface = NULL;
+	SDL_Texture* texture = NULL;
+
 	for(int i = 0; i < 6; i++)
 	{
 		std::string message;
 		switch(i)
 		{
 			case 0 : 
-				message = c.getName();
+				message = c->getName();
 				break;
 			case 1 :
-				message = "STR: " + std::to_string(c.getStrength());
+				message = "STR: " + std::to_string(c->getStrength());
 				break;
 			case 2 :
-				message = "AGL: " + std::to_string(c.getAgility());
+				message = "AGL: " + std::to_string(c->getAgility());
 				break;
 			case 3 :
-				message = "END: " + std::to_string(c.getEndurance());
+				message = "END: " + std::to_string(c->getEndurance());
 				break;
 			case 4 : 
-				message = "CHA: " + std::to_string(c.getCharisma());
+				message = "CHA: " + std::to_string(c->getCharisma());
 				break;
 			case 5 :
-				message = "HP: " + std::to_string(c.getHealth()); 
+				message = "HP: " + std::to_string(c->getHealth()); 
 				break;
 			default:
 				message = "";
 				break;
 		}
-		SDL_Surface* surface = TTF_RenderText_Solid(font, message.c_str(), textColor);
+		
+		// Create surface
+		surface = TTF_RenderText_Solid(font, message.c_str(), textColor);
 		if(surface == NULL)
 		{
 			cerr << "Surface error: " << TTF_GetError() << endl;
@@ -218,22 +221,25 @@ void GUI::drawStats(int x, int y, int w, int h, Character c)
 			SDL_Quit();
 			exit(1);
 		}
-		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-
+		// Create texture and free surface as we are done with it
+		texture = SDL_CreateTextureFromSurface(renderer, surface);		
+		SDL_FreeSurface(surface);
+		
+		// Create a rectangle for the Texture
 		SDL_Rect* title = new SDL_Rect();
 		title->x = x + (2 * margin) + w;
 		title->y = y + ((h / 6) * i);
 		title->w = w;
 		title->h = h / 6;
 
+		// Render
 		SDL_RenderCopy(renderer,texture, NULL, title);
+
+		// Destroy the title rectangle and texture as we are done with them
+		delete title;
+		SDL_DestroyTexture(texture);
 	}
-
-	flush();
-
-	//SDL_DestroyTexture(texture);
-	//SDL_FreeSurface(surface);
-	//TTF_CloseFont(font);
+	TTF_CloseFont(font);
 }
 
 void GUI::drawGameScreen()
@@ -252,4 +258,7 @@ void GUI::drawGameScreen()
 	mainRect->w = width;
 	mainRect->h = height;
 	SDL_RenderFillRect(renderer, mainRect);
+
+	// Flush and free resources
+	delete mainRect;
 }

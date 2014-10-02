@@ -96,10 +96,6 @@
     <ClCompile Include="InputListener.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\..\..\..\Pictures\Zork\enemyImg.png" />
-    <Image Include="..\..\..\..\..\Pictures\Zork\playerImg.png" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

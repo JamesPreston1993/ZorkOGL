@@ -1,6 +1,16 @@
 #include "Character.h"
 #include <string>
 
+
+Character::Character()
+{
+	this->name = "";
+	this->strength = 1;
+	this->endurance = 1;
+	this->agility = 1;
+	this->charisma = 1;
+	this->health = 100;
+}
 Character::Character(std::string name, int strength, int agility, int endurance, int charisma)
 {
 	this->name = name;

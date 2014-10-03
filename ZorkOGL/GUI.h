@@ -5,11 +5,12 @@
 class GUI
 {
 public:
-	GUI(GLint width, GLint height);
+	GUI(int width, int height);
 	~GUI(void);
 	void setupWindow();
 	void setupRenderer();	
 	void drawPlayer(Player* player);
+	void drawOpponent(Character* character);
 	void drawOpponent();
 	void drawOptions();
 	void drawGameScreen();	

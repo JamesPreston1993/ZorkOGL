@@ -1,5 +1,6 @@
 #pragma once
 #include "Player.h"
+#include "Character.h"
 class Game
 {
 public:
@@ -8,6 +9,7 @@ public:
 	virtual void run();
 	void setStateChanged(bool state);
 	Player* getPlayer();
+	Character* getOpponent();
 private:
 	bool isRunning;		
 };

@@ -10,13 +10,15 @@ using std::endl;
 int panelWidth; 
 int panelHeight;
 
-GUI::GUI(GLint width, GLint height)
+GUI::GUI(int width, int height)
 {
 	screenWidth = width;
 	screenHeight = height;
 	margin = 3;
 	panelWidth = (screenWidth - (4 * margin)) / 3;
-	panelHeight = 220;
+	panelHeight = (screenHeight - (4 * margin)) / 3;
+
+	setupWindow();
 }
 
 
@@ -26,7 +28,6 @@ GUI::~GUI(void)
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	TTF_Quit();
-	SDL_Quit();
 }
 
 void GUI::setupWindow()
@@ -34,7 +35,8 @@ void GUI::setupWindow()
 	// Set up display
 	SDL_Init(SDL_INIT_VIDEO);
 	TTF_Init();
-	window = SDL_CreateWindow("ZorkOGL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenWidth, screenHeight, 0);
+	window = SDL_CreateWindow("ZorkOGL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenWidth, screenHeight, SDL_WINDOW_FULLSCREEN);
+	setupRenderer();
 }
 void GUI::setupRenderer()
 {
@@ -94,15 +96,10 @@ void GUI::drawPlayer(Player* player)
 	delete mainRect;
 }
 
-/* Need to implement Enemy class
-void GUI::drawOpponent(Enemy enemy)
+//Need to implement Enemy class
+//void GUI::drawOpponent(Enemy* enemy)
+void GUI::drawOpponent(Character* character)
 {
-	
-}
-*/
-
-void GUI::drawOpponent()
-{	
 	int startX = (3 * margin) + (2 * panelWidth);
 	int startY = screenHeight - 220;
 
@@ -126,7 +123,27 @@ void GUI::drawOpponent()
 	pictureRect->h = panelHeight - (3 * margin);
 	SDL_RenderFillRect(renderer, pictureRect);
 	
+	drawStats(startX - margin - pictureRect->w, startY, pictureRect->w, pictureRect->h, character);
+
 	delete pictureRect;
+	delete mainRect;
+}
+
+void GUI::drawOpponent()
+{	
+	int startX = (3 * margin) + (2 * panelWidth);
+	int startY = screenHeight - 220;
+
+	// Set render color to medium grey
+    SDL_SetRenderDrawColor(renderer, 65, 65, 65, 255 );
+
+	SDL_Rect* mainRect = new SDL_Rect();
+	mainRect->x = startX;
+	mainRect->y = startY;
+	mainRect->w = panelWidth;
+	mainRect->h = panelHeight - margin;
+	SDL_RenderFillRect(renderer, mainRect);
+
 	delete mainRect;
 }
 
@@ -205,7 +222,12 @@ void GUI::drawStats(int x, int y, int w, int h, Character* c)
 				message = "CHA: " + std::to_string(c->getCharisma());
 				break;
 			case 5 :
-				message = "HP: " + std::to_string(c->getHealth()); 
+				if(c->getHealth() >= 100)
+					message = "HP:" + std::to_string(c->getHealth());
+				else if (c->getHealth() < 10)
+					message = "HP:  " + std::to_string(c->getHealth()); 
+				else
+					message = "HP: " + std::to_string(c->getHealth());
 				break;
 			default:
 				message = "";
@@ -250,7 +272,7 @@ void GUI::drawGameScreen()
 	int height = screenHeight - 220 - (2 * margin);
 	
 	// Set render color to dark grey
-    SDL_SetRenderDrawColor(renderer, 65, 65, 65, 255 );
+    SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255 );
 
 	SDL_Rect* mainRect = new SDL_Rect();
 	mainRect->x = startX;

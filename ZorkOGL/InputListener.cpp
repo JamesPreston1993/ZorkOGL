@@ -32,8 +32,12 @@ bool InputListener::listen()
 		if(event.key.keysym.sym == SDLK_SPACE)
 		{
 			// DEBUG: Press space takes away health
-			game->getPlayer()->setHealth(game->getPlayer()->getHealth() - 10);
+			game->getOpponent()->setHealth(game->getOpponent()->getHealth() - 10);
 			game->setStateChanged(true);
+		}
+		if(event.key.keysym.sym == SDLK_ESCAPE)
+		{
+			return false;
 		}
 	}		
 	// Test mouse input

@@ -8,18 +8,20 @@
 Player* player;
 Character* enemy;
 bool stateChanged;
+bool enemySelected;
 
 Game::Game(void)
 {	
 	isRunning = true;
 	stateChanged = true;
-	player = new Player("ARAGORN", 1, 2, 5, 6);
+	enemySelected = true;
+	player = new Player("ARAGORN", 9, 2, 5, 6);
 	enemy = new Character("BANDIT",3,2,1,4);
 }
 
 Game::~Game(void)
 {
-
+		
 }
 
 int main(int argc, char *args[])
@@ -33,20 +35,16 @@ int main(int argc, char *args[])
 void Game::run()
 {	
 	InputListener* input = new InputListener(*this);
-	GUI gui(1280, 720);
-	bool enemyAlive = false;	
+	GUI gui(1280, 720);	
 	while(isRunning)
 	{		
-		// Listen
+		// Listen for events
 		if(!input->listen())
 		{
 			isRunning = false;
 		}
 		
 		// Render
-		// TODO: Check if any changes have been made before rendering (improved performance)
-			
-		
 		if(stateChanged)
 		{
 			/* 
@@ -57,7 +55,7 @@ void Game::run()
 			stateChanged = false;			
 			gui.drawPlayer(player);
 			gui.drawOptions();
-			if(enemy != NULL)
+			if(enemySelected)
 				gui.drawOpponent(enemy);
 			else
 				gui.drawOpponent();
@@ -74,6 +72,18 @@ void Game::setStateChanged(bool state)
 	{
 		stateChanged = state;
 	}
+}
+
+void Game::setEnemySelected(bool selected)
+{
+	if(selected != enemySelected)
+	{
+		enemySelected = selected;
+	}
+}
+bool Game::getEnemySelected()
+{
+	return enemySelected;
 }
 
 Player* Game::getPlayer()

@@ -41,8 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\DevEnv\GamesDev\SDL\SDL2_ttf-2.0.12\include;C:\DevEnv\GamesDev\SDL\SDL2-2.0.3\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\DevEnv\GamesDev\SDL\SDL2_ttf-2.0.12\lib\x86;C:\DevEnv\GamesDev\SDL\SDL2-2.0.3\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\DevEnv\GamesDev\SDL\SDL2_ttf-2.0.12\include;C:\DevEnv\GamesDev\SDL\SDL2_image-2.0.0\include;C:\DevEnv\GamesDev\SDL\SDL2-2.0.3\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\DevEnv\GamesDev\SDL\SDL2_image-2.0.0\lib\x86;C:\DevEnv\GamesDev\SDL\SDL2_ttf-2.0.12\lib\x86;C:\DevEnv\GamesDev\SDL\SDL2-2.0.3\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -61,7 +61,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;OpenGL32.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;OpenGL32.lib;SDL2_ttf.lib;sdl2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -87,6 +87,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="InputListener.h" />
+    <ClInclude Include="InventoryItem.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +95,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="InputListener.cpp" />
+    <ClCompile Include="InventoryItem.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

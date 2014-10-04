@@ -1,20 +1,19 @@
 #include "GUI.h"
+#include "InventoryItem.h"
 #include <SDL.h>
 #include "SDL_opengl.h"
 #include <SDL_ttf.h>
+#include <SDL_image.h>
 #include <iostream>
 
 using std::cerr;
 using std::endl;
 
-int panelWidth; 
-int panelHeight;
-
 GUI::GUI(int width, int height)
 {
 	screenWidth = width;
 	screenHeight = height;
-	margin = 3;
+	margin = 5;
 	panelWidth = (screenWidth - (4 * margin)) / 3;
 	panelHeight = (screenHeight - (4 * margin)) / 3;
 
@@ -35,7 +34,19 @@ void GUI::setupWindow()
 	// Set up display
 	SDL_Init(SDL_INIT_VIDEO);
 	TTF_Init();
-	window = SDL_CreateWindow("ZorkOGL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenWidth, screenHeight, SDL_WINDOW_FULLSCREEN);
+	
+	// Doesn't work for multiple displays 
+	//window = SDL_CreateWindow("ZorkOGL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenWidth, screenHeight, SDL_WINDOW_FULLSCREEN);
+	
+	window = SDL_CreateWindow("ZorkOGL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screenWidth, screenHeight, 0);
+
+	if(window == NULL)
+	{
+		cerr << "Window error: " << TTF_GetError() << endl;
+		TTF_Quit();
+		SDL_Quit();
+		exit(0);
+	}
 	setupRenderer();
 }
 void GUI::setupRenderer()
@@ -43,6 +54,14 @@ void GUI::setupRenderer()
 	// Initialise renderer
 	renderer =  SDL_CreateRenderer(window, 0, SDL_RENDERER_ACCELERATED);	
     
+	if(renderer == NULL)
+	{
+		cerr << "Renderer error: " << TTF_GetError() << endl;
+		TTF_Quit();
+		SDL_Quit();
+		exit(0);
+	}
+
 	// Set render color to dark grey
     SDL_SetRenderDrawColor(renderer, 25, 25, 25, 255 );
 		
@@ -64,21 +83,29 @@ void GUI::clear()
 void GUI::drawPlayer(Player* player)
 {
 	int startX = margin;
-	int startY = screenHeight - 220;
-	int width = (screenWidth - (4 * margin)) / 3;
-	int height = 220 - margin;
+	int startY = screenHeight - panelHeight;	
 	
 	// Draw the holder rectangle
-
 	// Set render color to dark grey
     SDL_SetRenderDrawColor(renderer, 65, 65, 65, 255 );
 
 	SDL_Rect* mainRect = new SDL_Rect();
 	mainRect->x = startX;
 	mainRect->y = startY;
-	mainRect->w = width;
-	mainRect->h = height;
-	SDL_RenderFillRect(renderer, mainRect);
+	mainRect->w = panelWidth;
+	mainRect->h = panelHeight - margin;
+	//SDL_RenderFillRect(renderer, mainRect);
+
+	SDL_Surface* bkImage = SDL_LoadBMP("images/stone2.bmp");
+	if (bkImage == NULL)
+	{
+		cerr << "SDL_LoadBMP() Failed: " << SDL_GetError() << endl;
+		exit(0);
+	}
+	SDL_Texture* bkTexture = SDL_CreateTextureFromSurface(renderer, bkImage);
+	SDL_FreeSurface(bkImage);
+	SDL_RenderCopy(renderer,bkTexture, NULL, mainRect);
+	SDL_DestroyTexture(bkTexture);
 
 	// Set render color to medium grey
     SDL_SetRenderDrawColor(renderer, 10, 10, 10, 255 );
@@ -86,9 +113,20 @@ void GUI::drawPlayer(Player* player)
 	SDL_Rect* pictureRect = new SDL_Rect();
 	pictureRect->x = startX + margin;
 	pictureRect->y = startY + margin;
-	pictureRect->w = width / 2 - margin;
-	pictureRect->h = height - (2 * margin);
-	SDL_RenderFillRect(renderer, pictureRect);
+	pictureRect->w = panelWidth / 2 - margin;
+	pictureRect->h = mainRect->h - (2 * margin);
+	
+	SDL_Surface* image = SDL_LoadBMP(player->getImage().c_str());
+	if (image == NULL)
+	{
+		cerr << "SDL_LoadBMP() Failed: " << SDL_GetError() << endl;
+		exit(0);
+	}
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, image);
+	SDL_FreeSurface(image);
+	SDL_RenderCopy(renderer,texture, NULL, pictureRect);
+	SDL_DestroyTexture(texture);
+	//SDL_RenderFillRect(renderer, pictureRect);
 
 	drawStats(startX, startY, pictureRect->w, pictureRect->h, player);
 
@@ -96,12 +134,66 @@ void GUI::drawPlayer(Player* player)
 	delete mainRect;
 }
 
+void GUI::drawOpponent(Character* character)
+{
+	int startX = (3 * margin) + (2 * panelWidth);
+	int startY = screenHeight - panelHeight;
+
+	// Draw the holder rectangle
+	// Set render color to dark grey
+    SDL_SetRenderDrawColor(renderer, 65, 65, 65, 255 );
+
+	SDL_Rect* mainRect = new SDL_Rect();
+	mainRect->x = startX;
+	mainRect->y = startY;
+	mainRect->w = panelWidth;
+	mainRect->h = panelHeight - margin;
+	//SDL_RenderFillRect(renderer, mainRect);
+
+	SDL_Surface* bkImage = SDL_LoadBMP("images/stone2.bmp");
+	if (bkImage == NULL)
+	{
+		cerr << "SDL_LoadBMP() Failed: " << SDL_GetError() << endl;
+		exit(0);
+	}
+	SDL_Texture* bkTexture = SDL_CreateTextureFromSurface(renderer, bkImage);
+	SDL_FreeSurface(bkImage);
+	SDL_RenderCopy(renderer,bkTexture, NULL, mainRect);
+	SDL_DestroyTexture(bkTexture);
+
+	// Set render color to medium grey
+    SDL_SetRenderDrawColor(renderer, 10, 10, 10, 255 );
+
+	SDL_Rect* pictureRect = new SDL_Rect();
+	pictureRect->x = startX + margin;
+	pictureRect->y = startY + margin;
+	pictureRect->w = panelWidth / 2 - margin;
+	pictureRect->h = mainRect->h - (2 * margin);
+	
+	SDL_Surface* image = SDL_LoadBMP("images/enemyImg.bmp");
+	if (image == NULL)
+	{
+		cerr << "SDL_LoadBMP() Failed: " << SDL_GetError() << endl;
+		exit(0);
+	}
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, image);
+	SDL_FreeSurface(image);
+	SDL_RenderCopy(renderer,texture, NULL, pictureRect);
+	SDL_DestroyTexture(texture);	
+
+	drawStats(startX, startY, pictureRect->w, pictureRect->h, character);
+
+	delete pictureRect;
+	delete mainRect;
+}
+
+/*
 //Need to implement Enemy class
 //void GUI::drawOpponent(Enemy* enemy)
 void GUI::drawOpponent(Character* character)
 {
 	int startX = (3 * margin) + (2 * panelWidth);
-	int startY = screenHeight - 220;
+	int startY = screenHeight - panelHeight;
 
 	// Set render color to medium grey
     SDL_SetRenderDrawColor(renderer, 65, 65, 65, 255 );
@@ -120,7 +212,7 @@ void GUI::drawOpponent(Character* character)
 	pictureRect->x = startX + (panelWidth / 2) - (margin / 2);
 	pictureRect->y = startY + margin;
 	pictureRect->w = panelWidth / 2 - (margin / 2);
-	pictureRect->h = panelHeight - (3 * margin);
+	pictureRect->h = mainRect->h - (2 * margin);
 	SDL_RenderFillRect(renderer, pictureRect);
 	
 	drawStats(startX - margin - pictureRect->w, startY, pictureRect->w, pictureRect->h, character);
@@ -128,11 +220,12 @@ void GUI::drawOpponent(Character* character)
 	delete pictureRect;
 	delete mainRect;
 }
+*/
 
 void GUI::drawOpponent()
 {	
 	int startX = (3 * margin) + (2 * panelWidth);
-	int startY = screenHeight - 220;
+	int startY = screenHeight - panelHeight;
 
 	// Set render color to medium grey
     SDL_SetRenderDrawColor(renderer, 65, 65, 65, 255 );
@@ -142,17 +235,28 @@ void GUI::drawOpponent()
 	mainRect->y = startY;
 	mainRect->w = panelWidth;
 	mainRect->h = panelHeight - margin;
-	SDL_RenderFillRect(renderer, mainRect);
+	//SDL_RenderFillRect(renderer, mainRect);
+
+	SDL_Surface* bkImage = SDL_LoadBMP("images/stone2.bmp");
+	if (bkImage == NULL)
+	{
+		cerr << "SDL_LoadBMP() Failed: " << SDL_GetError() << endl;
+		exit(0);
+	}
+	SDL_Texture* bkTexture = SDL_CreateTextureFromSurface(renderer, bkImage);
+	SDL_FreeSurface(bkImage);
+	SDL_RenderCopy(renderer,bkTexture, NULL, mainRect);
+	SDL_DestroyTexture(bkTexture);
 
 	delete mainRect;
 }
 
 void GUI::drawOptions()
 {
-	int width = (screenWidth - (4 * margin)) / 3;
-	int height = 220 - margin;
-	int startX = width + (2 * margin);
-	int startY = screenHeight - 220;
+	//int width = (screenWidth - (4 * margin)) / 3;
+	//int height = panelHeight - margin;
+	int startX = panelWidth + (2 * margin);
+	int startY = screenHeight - panelHeight;
 	
 	// Set render color to medium grey
     SDL_SetRenderDrawColor(renderer, 65, 65, 65, 255 );
@@ -160,15 +264,26 @@ void GUI::drawOptions()
 	SDL_Rect* mainRect = new SDL_Rect();
 	mainRect->x = startX;
 	mainRect->y = startY;
-	mainRect->w = width;
-	mainRect->h = height;
-	SDL_RenderFillRect(renderer, mainRect);
+	mainRect->w = panelWidth;
+	mainRect->h = panelHeight - margin;
+	//SDL_RenderFillRect(renderer, mainRect);
+
+	SDL_Surface* bkImage = SDL_LoadBMP("images/stone2.bmp");
+	if (bkImage == NULL)
+	{
+		cerr << "SDL_LoadBMP() Failed: " << SDL_GetError() << endl;
+		exit(0);
+	}
+	SDL_Texture* bkTexture = SDL_CreateTextureFromSurface(renderer, bkImage);
+	SDL_FreeSurface(bkImage);
+	SDL_RenderCopy(renderer,bkTexture, NULL, mainRect);
+	SDL_DestroyTexture(bkTexture);
 
 	// Set render color to medium grey
 	SDL_SetRenderDrawColor(renderer, 10, 10, 10, 255 );	
 	
-	width = (220 - (5 * margin)) / 3;
-	height = width;
+	int width = (panelHeight - (5 * margin)) / 3;
+	int height = width;
 
 	for(int col = 0; col < 3 * width; col+=width + margin)
 	{
@@ -180,6 +295,21 @@ void GUI::drawOptions()
 			invRect->w = width;
 			invRect->h = height;
 			SDL_RenderFillRect(renderer, invRect);
+
+			if(row == 0 & col == 0)
+			{
+				InventoryItem key("Key", 1, 0);
+				SDL_Surface* image = SDL_LoadBMP(key.getItemImage().c_str());
+				if(image == NULL)
+				{
+					cerr << "SDL_LoadBMP() Failed: " << SDL_GetError() << endl;
+					exit(0);
+				}
+				SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, image);
+				SDL_FreeSurface(image);
+				SDL_RenderCopy(renderer,texture,NULL,invRect);
+			}
+
 			delete invRect;
 		}
 	}	
@@ -188,7 +318,7 @@ void GUI::drawOptions()
 
 void GUI::drawStats(int x, int y, int w, int h, Character* c)
 {
-	TTF_Font* font = TTF_OpenFont("TerminusTTF-4.39.ttf", 18);
+	TTF_Font* font = TTF_OpenFont("font/TerminusTTF-4.39.ttf", 18);
 	if(font == NULL)
 	{
 		cerr << "Font error: " << TTF_GetError() << endl;
@@ -241,7 +371,7 @@ void GUI::drawStats(int x, int y, int w, int h, Character* c)
 			cerr << "Surface error: " << TTF_GetError() << endl;
 			TTF_Quit();
 			SDL_Quit();
-			exit(1);
+			exit(0);
 		}
 		// Create texture and free surface as we are done with it
 		texture = SDL_CreateTextureFromSurface(renderer, surface);		
@@ -269,7 +399,7 @@ void GUI::drawGameScreen()
 	int startX = margin;
 	int startY = margin;
 	int width = screenWidth - (2 * margin);
-	int height = screenHeight - 220 - (2 * margin);
+	int height = screenHeight - panelHeight - (2 * margin);
 	
 	// Set render color to dark grey
     SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255 );
@@ -279,8 +409,8 @@ void GUI::drawGameScreen()
 	mainRect->y = startY;
 	mainRect->w = width;
 	mainRect->h = height;
-	SDL_RenderFillRect(renderer, mainRect);
+	SDL_RenderFillRect(renderer, mainRect);	
 
-	// Flush and free resources
+	// Free resources
 	delete mainRect;
 }

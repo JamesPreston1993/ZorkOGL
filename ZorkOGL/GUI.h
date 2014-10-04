@@ -6,7 +6,7 @@ class GUI
 {
 public:
 	GUI(int width, int height);
-	~GUI(void);
+	virtual ~GUI(void);
 	void setupWindow();
 	void setupRenderer();	
 	void drawPlayer(Player* player);
@@ -19,9 +19,11 @@ public:
 	void clear();
 
 private:
-	GLint screenWidth;
-	GLint screenHeight;
-	GLint margin;
+	int screenWidth;
+	int screenHeight;
+	int panelWidth; 
+    int panelHeight;
+	int margin;
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 };

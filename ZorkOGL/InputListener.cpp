@@ -31,9 +31,17 @@ bool InputListener::listen()
 	{
 		if(event.key.keysym.sym == SDLK_SPACE)
 		{
-			// DEBUG: Press space takes away health
-			game->getOpponent()->setHealth(game->getOpponent()->getHealth() - 10);
-			game->setStateChanged(true);
+			// DEBUG: Press space takes away health from enemy
+			if(game->getEnemySelected())
+			{
+				game->getOpponent()->setHealth(game->getOpponent()->getHealth() - game->getPlayer()->getStrength());
+				game->setStateChanged(true);
+				if(game->getOpponent()->getHealth() == 0)
+				{
+					game->setEnemySelected(false);
+					delete game->getOpponent();
+				}
+			}
 		}
 		if(event.key.keysym.sym == SDLK_ESCAPE)
 		{
@@ -43,6 +51,7 @@ bool InputListener::listen()
 	// Test mouse input
 		
 	// Delay
+	
 	SDL_Delay(10);
 		
 	return true;

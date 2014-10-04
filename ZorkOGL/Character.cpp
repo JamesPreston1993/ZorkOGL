@@ -1,6 +1,4 @@
 #include "Character.h"
-#include <string>
-
 
 Character::Character()
 {
@@ -90,4 +88,13 @@ void Character::setHealth(int health)
 	{
 		this->health = health;
 	}
+}
+
+std::string Character::getImage()
+{
+	return image;
+}
+void Character::setImage(std::string image)
+{
+	this->image = image;
 }

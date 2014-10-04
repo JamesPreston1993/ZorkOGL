@@ -31,6 +31,10 @@ public:
 	int getHealth();
 	void setHealth(int health);
 
+	// Get & Set Image
+	std::string getImage();
+	void setImage(std::string image);
+
 private:
 	// Skills
 	std::string name;
@@ -38,6 +42,7 @@ private:
 	int agility;
 	int endurance;
 	int charisma;		
-	int health;	
+	int health;
+	std::string image;
 };
 

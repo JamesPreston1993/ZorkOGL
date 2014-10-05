@@ -20,7 +20,6 @@ GUI::GUI(int width, int height)
 	setupWindow();
 }
 
-
 GUI::~GUI(void)
 {
 	clear();
@@ -251,7 +250,7 @@ void GUI::drawOpponent()
 	delete mainRect;
 }
 
-void GUI::drawOptions()
+void GUI::drawInventory(Player* player)
 {
 	//int width = (screenWidth - (4 * margin)) / 3;
 	//int height = panelHeight - margin;
@@ -293,7 +292,7 @@ void GUI::drawOptions()
 			invRect->x = startX + row + margin;
 			invRect->y = startY + col + margin;
 			invRect->w = width;
-			invRect->h = height;
+			invRect->h = height;			
 			SDL_RenderFillRect(renderer, invRect);
 
 			if(row == 0 & col == 0)

@@ -3,7 +3,7 @@
 class InputListener
 {
 public:
-	InputListener(Game game);
+	InputListener(Game* game);
 	~InputListener();
 	bool listen();
 private:

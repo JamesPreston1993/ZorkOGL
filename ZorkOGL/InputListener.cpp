@@ -1,17 +1,16 @@
 #include "InputListener.h"
 #include "Game.h"
 #include <SDL.h>
-//#include "SDL_opengl.h"
 
-InputListener::InputListener(Game game)
+InputListener::InputListener(Game* game)
 {
-	this->game = &game;
+	this->game = game;
 }
 
 
 InputListener::~InputListener()
 {
-
+	
 }
 
 bool InputListener::listen()
@@ -38,8 +37,8 @@ bool InputListener::listen()
 				game->setStateChanged(true);
 				if(game->getOpponent()->getHealth() == 0)
 				{
-					game->setEnemySelected(false);
-					delete game->getOpponent();
+					game->setEnemySelected(false);					
+					delete game->getOpponent();				
 				}
 			}
 		}

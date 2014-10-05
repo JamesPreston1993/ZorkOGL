@@ -13,6 +13,10 @@ public:
 	Player* getPlayer();
 	Character* getOpponent();
 private:
-	bool isRunning;		
+	bool isRunning;
+	Player* player;
+	Character* enemy;
+	bool stateChanged;
+	bool enemySelected;
 };
 

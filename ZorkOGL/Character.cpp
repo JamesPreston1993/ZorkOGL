@@ -21,6 +21,7 @@ Character::Character(std::string name, int strength, int agility, int endurance,
 
 Character::~Character(void)
 {
+	
 }
 
 std::string Character::getName()

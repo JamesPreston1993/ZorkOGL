@@ -5,11 +5,6 @@
 #include "InputListener.h"
 #include <SDL.h>
 
-Player* player;
-Character* enemy;
-bool stateChanged;
-bool enemySelected;
-
 Game::Game(void)
 {	
 	isRunning = true;
@@ -20,21 +15,15 @@ Game::Game(void)
 }
 
 Game::~Game(void)
-{
-		
-}
-
-int main(int argc, char *args[])
-{	
-	Game game;
-	game.run();
+{		
+	delete player;
+	// Delete enemy if they exist - doesn't work	
 	SDL_Quit();
-	return 0;
 }
 
 void Game::run()
 {	
-	InputListener* input = new InputListener(*this);
+	InputListener* input = new InputListener(this);
 	GUI gui(1280, 720);	
 	while(isRunning)
 	{		
@@ -54,16 +43,17 @@ void Game::run()
 			*/
 			stateChanged = false;			
 			gui.drawPlayer(player);
-			gui.drawOptions();
+			gui.drawInventory(player);
 			if(enemySelected)
 				gui.drawOpponent(enemy);
 			else
 				gui.drawOpponent();
-			gui.drawGameScreen();		
+			gui.drawGameScreen();
 		
 			gui.flush();
 		}		
-	}	
+	}
+	delete input;
 }
 
 void Game::setStateChanged(bool state)

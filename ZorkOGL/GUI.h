@@ -12,9 +12,8 @@ public:
 	void drawPlayer(Player* player);
 	void drawOpponent(Character* character);
 	void drawOpponent();
-	void drawOptions();
-	void drawGameScreen();	
-	void drawStats(int x, int y, int w, int h, Character* c);
+	void drawInventory(Player* player);
+	void drawGameScreen();		
 	void flush();
 	void clear();
 
@@ -26,5 +25,5 @@ private:
 	int margin;
 	SDL_Window* window;
 	SDL_Renderer* renderer;
+	void drawStats(int x, int y, int w, int h, Character* c);
 };
-

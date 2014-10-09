@@ -1,7 +1,6 @@
 #include "Game.h"
 #include "GUI.h"
-#include "Player.h"
-#include "Character.h"
+#include "GameObject.h"
 #include "InputListener.h"
 #include <SDL.h>
 
@@ -11,7 +10,7 @@ Game::Game(void)
 	stateChanged = true;
 	enemySelected = true;
 	player = new Player("ARAGORN", 9, 2, 5, 6);
-	enemy = new Character("BANDIT",3,2,1,4);
+	enemy = new Enemy("BANDIT", GameObject::BANDIT);
 }
 
 Game::~Game(void)
@@ -24,7 +23,7 @@ Game::~Game(void)
 void Game::run()
 {	
 	InputListener* input = new InputListener(this);
-	GUI gui(1280, 720);	
+	GUI gui(1366, 768);	
 	while(isRunning)
 	{		
 		// Listen for events
@@ -36,18 +35,13 @@ void Game::run()
 		// Render
 		if(stateChanged)
 		{
-			/* 
-				***** WARNING ****
-				*  Memory leak   *
-				******************
-			*/
 			stateChanged = false;			
-			gui.drawPlayer(player);
+			gui.drawCharacter(player);
 			gui.drawInventory(player);
 			if(enemySelected)
-				gui.drawOpponent(enemy);
+				gui.drawCharacter(enemy);
 			else
-				gui.drawOpponent();
+				gui.drawCharacter();
 			gui.drawGameScreen();
 		
 			gui.flush();
@@ -81,7 +75,7 @@ Player* Game::getPlayer()
 	return player;
 }
 
-Character* Game::getOpponent()
+Enemy* Game::getOpponent()
 {
 	return enemy;
 }

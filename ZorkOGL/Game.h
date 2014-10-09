@@ -1,6 +1,6 @@
 #pragma once
 #include "Player.h"
-#include "Character.h"
+#include "Enemy.h"
 class Game
 {
 public:
@@ -11,11 +11,11 @@ public:
 	void setEnemySelected(bool selected);
 	bool getEnemySelected();
 	Player* getPlayer();
-	Character* getOpponent();
+	Enemy* getOpponent();
 private:
 	bool isRunning;
 	Player* player;
-	Character* enemy;
+	Enemy* enemy;
 	bool stateChanged;
 	bool enemySelected;
 };

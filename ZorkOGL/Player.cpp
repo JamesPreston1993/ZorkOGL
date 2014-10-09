@@ -6,7 +6,8 @@ Player::Player() : Character()
 
 Player::Player(std::string name, int strength, int agility, int endurance, int charisma) : Character(name, strength, agility, endurance, charisma)
 {
-	this->setImage("images/playerImg.bmp");
+	this->setID(PLAYER);
+	this->setHUDImage("images/playerImg.bmp");
 }
 
 

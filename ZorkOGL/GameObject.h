@@ -30,16 +30,15 @@ public:
 	int getWidth();
 	void setWidth(int width);
 	int getHeight();
-	void getHeight(int height);
+	void setHeight(int height);
 	ID getID();
-	void setID(ID id);	
-	SDL_Rect* getBounds();				
+	void setID(ID id);
+	void draw(SDL_Renderer* renderer);
 private:
 	int x;
 	int y;
 	int width;
 	int height;	
 	ID id;
-	SDL_Rect* bounds;
 };
 

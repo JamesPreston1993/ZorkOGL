@@ -1,19 +1,17 @@
 #include "InventoryItem.h"
 
-
-InventoryItem::InventoryItem()
+InventoryItem::InventoryItem() : GameObject()
 {
 }
 
-InventoryItem::InventoryItem(std::string name, int weight, int value)
+InventoryItem::InventoryItem(ID id) : GameObject()
 {
-	this->name = name;
-	this->value = value;
-	this->weight = weight;
-
-	if(name == "Key")
+	if(id == KEY)
 	{
 		this->itemImage = "images/key.bmp";
+		this->name = "Key";
+		this->weight = 1;
+		this->value = 0;
 	}
 }
 

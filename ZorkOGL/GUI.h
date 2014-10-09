@@ -8,10 +8,9 @@ public:
 	GUI(int width, int height);
 	virtual ~GUI(void);
 	void setupWindow();
-	void setupRenderer();	
-	void drawPlayer(Player* player);
-	void drawOpponent(Character* character);
-	void drawOpponent();
+	void setupRenderer();
+	void drawCharacter(Character* character);
+	void drawCharacter();
 	void drawInventory(Player* player);
 	void drawGameScreen();		
 	void flush();
@@ -22,7 +21,7 @@ private:
 	int screenHeight;
 	int panelWidth; 
     int panelHeight;
-	int margin;
+	static const short margin = 5;
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	void drawStats(int x, int y, int w, int h, Character* c);

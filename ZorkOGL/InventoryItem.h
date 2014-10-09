@@ -1,10 +1,12 @@
 #pragma once
 #include <string>
-class InventoryItem
+#include "GameObject.h"
+
+class InventoryItem : public GameObject
 {
 public:
 	InventoryItem();
-	InventoryItem(std::string, int weight, int value);
+	InventoryItem(ID id);
 	~InventoryItem(void);
 
 	std::string getItemImage();

@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
-class Character
+#include "GameObject.h"
+
+class Character : public GameObject
 {
 public:
 	Character();
@@ -32,8 +34,8 @@ public:
 	void setHealth(int health);
 
 	// Get & Set Image
-	std::string getImage();
-	void setImage(std::string image);
+	std::string getHUDImage();
+	void setHUDImage(std::string image);
 
 private:
 	// Skills

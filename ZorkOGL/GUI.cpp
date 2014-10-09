@@ -1,4 +1,5 @@
 #include "GUI.h"
+#include "GameObject.h"
 #include "InventoryItem.h"
 #include <SDL.h>
 #include "SDL_opengl.h"
@@ -13,9 +14,8 @@ GUI::GUI(int width, int height)
 {
 	screenWidth = width;
 	screenHeight = height;
-	margin = 5;
 	panelWidth = (screenWidth - (4 * margin)) / 3;
-	panelHeight = (screenHeight - (4 * margin)) / 3;
+	panelHeight = (screenHeight - (3 * margin)) / 4;
 
 	setupWindow();
 }
@@ -35,9 +35,9 @@ void GUI::setupWindow()
 	TTF_Init();
 	
 	// Doesn't work for multiple displays 
-	//window = SDL_CreateWindow("ZorkOGL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenWidth, screenHeight, SDL_WINDOW_FULLSCREEN);
+	window = SDL_CreateWindow("ZorkOGL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenWidth, screenHeight, SDL_WINDOW_FULLSCREEN);
 	
-	window = SDL_CreateWindow("ZorkOGL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screenWidth, screenHeight, 0);
+	//window = SDL_CreateWindow("ZorkOGL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screenWidth, screenHeight, 0);
 
 	if(window == NULL)
 	{
@@ -79,11 +79,19 @@ void GUI::clear()
 	SDL_RenderClear(renderer);
 }
 
-void GUI::drawPlayer(Player* player)
+void GUI::drawCharacter(Character* character)
 {
-	int startX = margin;
-	int startY = screenHeight - panelHeight;	
-	
+	int startX, startY;
+	if(character->getID() == GameObject::PLAYER)
+	{
+		startX = margin;
+		startY = screenHeight - panelHeight;
+	}
+	else
+	{
+		startX = (3 * margin) + (2 * panelWidth);
+		startY = screenHeight - panelHeight;
+	}
 	// Draw the holder rectangle
 	// Set render color to dark grey
     SDL_SetRenderDrawColor(renderer, 65, 65, 65, 255 );
@@ -115,61 +123,7 @@ void GUI::drawPlayer(Player* player)
 	pictureRect->w = panelWidth / 2 - margin;
 	pictureRect->h = mainRect->h - (2 * margin);
 	
-	SDL_Surface* image = SDL_LoadBMP(player->getImage().c_str());
-	if (image == NULL)
-	{
-		cerr << "SDL_LoadBMP() Failed: " << SDL_GetError() << endl;
-		exit(0);
-	}
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, image);
-	SDL_FreeSurface(image);
-	SDL_RenderCopy(renderer,texture, NULL, pictureRect);
-	SDL_DestroyTexture(texture);
-	//SDL_RenderFillRect(renderer, pictureRect);
-
-	drawStats(startX, startY, pictureRect->w, pictureRect->h, player);
-
-	delete pictureRect;
-	delete mainRect;
-}
-
-void GUI::drawOpponent(Character* character)
-{
-	int startX = (3 * margin) + (2 * panelWidth);
-	int startY = screenHeight - panelHeight;
-
-	// Draw the holder rectangle
-	// Set render color to dark grey
-    SDL_SetRenderDrawColor(renderer, 65, 65, 65, 255 );
-
-	SDL_Rect* mainRect = new SDL_Rect();
-	mainRect->x = startX;
-	mainRect->y = startY;
-	mainRect->w = panelWidth;
-	mainRect->h = panelHeight - margin;
-	//SDL_RenderFillRect(renderer, mainRect);
-
-	SDL_Surface* bkImage = SDL_LoadBMP("images/stone2.bmp");
-	if (bkImage == NULL)
-	{
-		cerr << "SDL_LoadBMP() Failed: " << SDL_GetError() << endl;
-		exit(0);
-	}
-	SDL_Texture* bkTexture = SDL_CreateTextureFromSurface(renderer, bkImage);
-	SDL_FreeSurface(bkImage);
-	SDL_RenderCopy(renderer,bkTexture, NULL, mainRect);
-	SDL_DestroyTexture(bkTexture);
-
-	// Set render color to medium grey
-    SDL_SetRenderDrawColor(renderer, 10, 10, 10, 255 );
-
-	SDL_Rect* pictureRect = new SDL_Rect();
-	pictureRect->x = startX + margin;
-	pictureRect->y = startY + margin;
-	pictureRect->w = panelWidth / 2 - margin;
-	pictureRect->h = mainRect->h - (2 * margin);
-	
-	SDL_Surface* image = SDL_LoadBMP("images/enemyImg.bmp");
+	SDL_Surface* image = SDL_LoadBMP(character->getHUDImage().c_str());
 	if (image == NULL)
 	{
 		cerr << "SDL_LoadBMP() Failed: " << SDL_GetError() << endl;
@@ -186,42 +140,7 @@ void GUI::drawOpponent(Character* character)
 	delete mainRect;
 }
 
-/*
-//Need to implement Enemy class
-//void GUI::drawOpponent(Enemy* enemy)
-void GUI::drawOpponent(Character* character)
-{
-	int startX = (3 * margin) + (2 * panelWidth);
-	int startY = screenHeight - panelHeight;
-
-	// Set render color to medium grey
-    SDL_SetRenderDrawColor(renderer, 65, 65, 65, 255 );
-
-	SDL_Rect* mainRect = new SDL_Rect();
-	mainRect->x = startX;
-	mainRect->y = startY;
-	mainRect->w = panelWidth;
-	mainRect->h = panelHeight - margin;
-	SDL_RenderFillRect(renderer, mainRect);
-
-	// Set render color to dark grey
-    SDL_SetRenderDrawColor(renderer, 10, 10, 10, 255 );
-
-	SDL_Rect* pictureRect = new SDL_Rect();
-	pictureRect->x = startX + (panelWidth / 2) - (margin / 2);
-	pictureRect->y = startY + margin;
-	pictureRect->w = panelWidth / 2 - (margin / 2);
-	pictureRect->h = mainRect->h - (2 * margin);
-	SDL_RenderFillRect(renderer, pictureRect);
-	
-	drawStats(startX - margin - pictureRect->w, startY, pictureRect->w, pictureRect->h, character);
-
-	delete pictureRect;
-	delete mainRect;
-}
-*/
-
-void GUI::drawOpponent()
+void GUI::drawCharacter()
 {	
 	int startX = (3 * margin) + (2 * panelWidth);
 	int startY = screenHeight - panelHeight;
@@ -295,9 +214,9 @@ void GUI::drawInventory(Player* player)
 			invRect->h = height;			
 			SDL_RenderFillRect(renderer, invRect);
 
-			if(row == 0 & col == 0)
+			if(row == 0 && col == 0)
 			{
-				InventoryItem key("Key", 1, 0);
+				InventoryItem key(GameObject::KEY);
 				SDL_Surface* image = SDL_LoadBMP(key.getItemImage().c_str());
 				if(image == NULL)
 				{
@@ -386,7 +305,7 @@ void GUI::drawStats(int x, int y, int w, int h, Character* c)
 		// Render
 		SDL_RenderCopy(renderer,texture, NULL, title);
 
-		// Destroy the title rectangle and texture as we are done with them
+		// Destroy the title rectangle and texture when we are done with them
 		delete title;
 		SDL_DestroyTexture(texture);
 	}

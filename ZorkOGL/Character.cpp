@@ -1,6 +1,6 @@
 #include "Character.h"
 
-Character::Character()
+Character::Character() : GameObject()
 {
 	this->name = "";
 	this->strength = 1;
@@ -9,7 +9,7 @@ Character::Character()
 	this->charisma = 1;
 	this->health = 100;
 }
-Character::Character(std::string name, int strength, int agility, int endurance, int charisma)
+Character::Character(std::string name, int strength, int agility, int endurance, int charisma) : GameObject()
 {
 	this->name = name;
 	this->strength = strength;
@@ -91,11 +91,11 @@ void Character::setHealth(int health)
 	}
 }
 
-std::string Character::getImage()
+std::string Character::getHUDImage()
 {
 	return image;
 }
-void Character::setImage(std::string image)
+void Character::setHUDImage(std::string image)
 {
 	this->image = image;
 }

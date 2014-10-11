@@ -1,11 +1,4 @@
 #include "GUI.h"
-#include "GameObject.h"
-#include "InventoryItem.h"
-#include <SDL.h>
-#include "SDL_opengl.h"
-#include <SDL_ttf.h>
-#include <SDL_image.h>
-#include <iostream>
 
 using std::cerr;
 using std::endl;
@@ -35,9 +28,9 @@ void GUI::setupWindow()
 	TTF_Init();
 	
 	// Doesn't work for multiple displays 
-	window = SDL_CreateWindow("ZorkOGL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenWidth, screenHeight, SDL_WINDOW_FULLSCREEN);
+	//window = SDL_CreateWindow("ZorkOGL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenWidth, screenHeight, SDL_WINDOW_FULLSCREEN);
 	
-	//window = SDL_CreateWindow("ZorkOGL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screenWidth, screenHeight, 0);
+	window = SDL_CreateWindow("ZorkOGL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screenWidth, screenHeight, 0);
 
 	if(window == NULL)
 	{
@@ -312,22 +305,21 @@ void GUI::drawStats(int x, int y, int w, int h, Character* c)
 	TTF_CloseFont(font);
 }
 
-void GUI::drawGameScreen()
+void GUI::drawGameScreen(Scene* currentScene)
 {
 	int startX = margin;
 	int startY = margin;
 	int width = screenWidth - (2 * margin);
 	int height = screenHeight - panelHeight - (2 * margin);
-	
-	// Set render color to dark grey
-    SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255 );
 
 	SDL_Rect* mainRect = new SDL_Rect();
 	mainRect->x = startX;
 	mainRect->y = startY;
 	mainRect->w = width;
 	mainRect->h = height;
-	SDL_RenderFillRect(renderer, mainRect);	
+
+	// Create and draw scene
+	currentScene->drawScene(renderer, mainRect);
 
 	// Free resources
 	delete mainRect;

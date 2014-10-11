@@ -8,5 +8,7 @@ public:
 	bool listen();
 private:
 	Game* game;
+	void getKeyboardInput(SDL_Event event);
+	void getMouseInput(SDL_Event event);
 };
 

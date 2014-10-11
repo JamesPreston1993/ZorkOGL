@@ -1,6 +1,8 @@
 #pragma once
 #include "Player.h"
 #include "Enemy.h"
+#include "Scene.h"
+
 class Game
 {
 public:
@@ -12,11 +14,13 @@ public:
 	bool getEnemySelected();
 	Player* getPlayer();
 	Enemy* getOpponent();
+	void setCurrentScene(Scene::SceneID nextScene);
 private:
 	bool isRunning;
 	Player* player;
 	Enemy* enemy;
 	bool stateChanged;
 	bool enemySelected;
+	Scene* currentScene;
 };
 

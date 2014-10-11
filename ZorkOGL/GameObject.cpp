@@ -66,9 +66,18 @@ void GameObject::draw(SDL_Renderer* renderer)
 	std::string imagePath = "images/";
 	switch(id)
 	{
-	case PLAYER : imagePath += "playerImg.bmp"; break;
-	case BANDIT : imagePath += "enemyImg.bmp"; break;
-	case KEY : imagePath += "key.bmp"; break;
+		case PLAYER : 
+			imagePath += "playerImg.bmp"; break;
+		case GUARD :
+			imagePath += "enemyImg.bmp"; break;
+		case CAPTAIN : 
+			imagePath += "enemyImg.bmp"; break;
+		case BOSS :
+			imagePath += "enemyImg.bmp"; break;
+		case KEY : 
+			imagePath += "key.bmp"; break;
+		
+		// TODO: Other items
 	}
 
 	SDL_Rect* pictureRect = new SDL_Rect();

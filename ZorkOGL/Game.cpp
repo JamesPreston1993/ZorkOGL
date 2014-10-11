@@ -7,23 +7,41 @@
 Game::Game(void)
 {	
 	isRunning = true;
-	stateChanged = true;
-	enemySelected = true;
-	player = new Player("ARAGORN", 9, 2, 5, 6);
-	enemy = new Enemy("BANDIT", GameObject::BANDIT);
+	stateChanged = true;	
+	player = new Player("ARAGORN", 9, 2, 5, 6);	
+	currentScene = new Scene(Scene::MAIN_HALL);
+
+	// If the scene has an enemy, set the current enemy to that scene's main enemy
+	// Otherwise, set to NULL
+	if(currentScene->hasEnemies())
+	{
+		enemy = currentScene->getEnemy();
+		enemySelected = true;
+	}
+	else
+	{
+		enemy = NULL;
+		enemySelected = false;
+	}
 }
 
 Game::~Game(void)
 {		
 	delete player;
-	// Delete enemy if they exist - doesn't work	
+	delete currentScene;
+	// Delete enemy if they exist - doesn't work
 	SDL_Quit();
 }
 
 void Game::run()
 {	
+	// Create an input listener
 	InputListener* input = new InputListener(this);
+	
+	// Create the GUI specifying the screen width and height
 	GUI gui(1366, 768);	
+	
+	// Start the game loop
 	while(isRunning)
 	{		
 		// Listen for events
@@ -32,21 +50,26 @@ void Game::run()
 			isRunning = false;
 		}
 		
-		// Render
+		// Render if the state has changed - avoids unnecessary rendering
 		if(stateChanged)
 		{
 			stateChanged = false;			
 			gui.drawCharacter(player);
 			gui.drawInventory(player);
+			
+			// If the player has selected an opponent, their stats will be displayed
 			if(enemySelected)
 				gui.drawCharacter(enemy);
 			else
 				gui.drawCharacter();
-			gui.drawGameScreen();
+			
+			gui.drawGameScreen(currentScene);
 		
+			// Flush to screen
 			gui.flush();
 		}		
 	}
+	// Delete the input listener
 	delete input;
 }
 
@@ -78,4 +101,24 @@ Player* Game::getPlayer()
 Enemy* Game::getOpponent()
 {
 	return enemy;
+}
+
+void Game::setCurrentScene(Scene::SceneID newScene)
+{
+	if(newScene != currentScene->getID())
+	{
+		currentScene = new Scene(newScene);
+		// If the scene has an enemy, set the current enemy to that scene's main enemy
+		// Otherwise, set to NULL
+		if(currentScene->hasEnemies())
+		{
+			enemy = currentScene->getEnemy();
+			enemySelected = true;
+		}
+		else
+		{
+			enemy = NULL;
+			enemySelected = false;
+		}
+	}
 }

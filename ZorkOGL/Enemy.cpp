@@ -16,15 +16,15 @@ Enemy::Enemy(std::string name, ID id)
 		this->setAgility(2);
 		this->setEndurance(4);
 		this->setCharisma(2);
-		// TODO: Set HUD image
+		this->setHUDImage("images/guardImg.bmp");
 	}
-	else if(id == BANDIT)
+	else if(id == CAPTAIN)
 	{
 		this->setStrength(7);
 		this->setAgility(5);
 		this->setEndurance(6);
 		this->setCharisma(5);
-		this->setHUDImage("images/enemyImg.bmp");
+		this->setHUDImage("images/captainImg.bmp");
 	}
 	else if(id == BOSS)
 	{
@@ -32,7 +32,7 @@ Enemy::Enemy(std::string name, ID id)
 		this->setAgility(2);
 		this->setEndurance(7);
 		this->setCharisma(9);
-		// TODO: Set HUD image
+		this->setHUDImage("images/bossImg.bmp");
 	}
 }
 

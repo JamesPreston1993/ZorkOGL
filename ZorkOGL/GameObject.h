@@ -8,7 +8,7 @@ public:
 		// Characters
 		PLAYER = 0,
 		GUARD,
-		BANDIT,
+		CAPTAIN,
 		BOSS,
 		// Items
 		KEY,

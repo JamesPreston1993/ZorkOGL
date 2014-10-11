@@ -91,6 +91,7 @@
     <ClInclude Include="InputListener.h" />
     <ClInclude Include="InventoryItem.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Scene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Character.cpp" />
@@ -102,6 +103,7 @@
     <ClCompile Include="InputListener.cpp" />
     <ClCompile Include="InventoryItem.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

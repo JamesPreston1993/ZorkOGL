@@ -26,11 +26,24 @@ bool InputListener::listen()
 	}		
 
 	// Test keyboard input
+	getKeyboardInput(event);
+
+	// Test mouse input
+	getMouseInput(event);
+
+	// Delay - Improves CPU performance
+	SDL_Delay(10);
+		
+	return true;
+}
+
+void InputListener::getKeyboardInput(SDL_Event event)
+{
 	if(event.type == SDL_KEYDOWN)
 	{
+		// DEBUG: Press space takes away health from enemy
 		if(event.key.keysym.sym == SDLK_SPACE)
 		{
-			// DEBUG: Press space takes away health from enemy
 			if(game->getEnemySelected())
 			{
 				game->getOpponent()->setHealth(game->getOpponent()->getHealth() - game->getPlayer()->getStrength());
@@ -38,20 +51,26 @@ bool InputListener::listen()
 				if(game->getOpponent()->getHealth() == 0)
 				{
 					game->setEnemySelected(false);					
-					delete game->getOpponent();				
+					delete game->getOpponent();
 				}
 			}
 		}
+		// DEBUG: Press escape to close the game
 		if(event.key.keysym.sym == SDLK_ESCAPE)
 		{
-			return false;
+			SDL_Quit();
 		}
-	}		
-	// Test mouse input
-		
-	// Delay
-	
-	SDL_Delay(10);
-		
-	return true;
+	}
+}
+
+void InputListener::getMouseInput(SDL_Event event)
+{
+	if(event.type == SDL_MOUSEBUTTONDOWN)
+	{
+
+	}
+	if(event.type == SDL_MOUSEBUTTONUP)
+	{
+
+	}
 }

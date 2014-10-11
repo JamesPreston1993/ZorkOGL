@@ -10,7 +10,15 @@ Player::Player(std::string name, int strength, int agility, int endurance, int c
 	this->setHUDImage("images/playerImg.bmp");
 }
 
-
 Player::~Player(void)
 {
+
+}
+
+void Player::addToInventory(InventoryItem item)
+{
+	if(inventory.size() < 9)
+	{
+		inventory.push_back(item);
+	}
 }

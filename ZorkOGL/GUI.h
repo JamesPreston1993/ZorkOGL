@@ -1,7 +1,13 @@
 #pragma once
 #include <SDL.h>
-#include "SDL_opengl.h"
 #include "Player.h"
+#include "GameObject.h"
+#include "InventoryItem.h"
+#include <SDL_ttf.h>
+#include <SDL_image.h>
+#include <iostream>
+#include "Scene.h"
+
 class GUI
 {
 public:
@@ -12,7 +18,7 @@ public:
 	void drawCharacter(Character* character);
 	void drawCharacter();
 	void drawInventory(Player* player);
-	void drawGameScreen();		
+	void drawGameScreen(Scene* currentScene);		
 	void flush();
 	void clear();
 

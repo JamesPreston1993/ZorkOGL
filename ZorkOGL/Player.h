@@ -11,7 +11,10 @@ public:
 	Player(std::string name, int strength, int agility, int endurance, int charisma);
 	~Player(void);
 	void addToInventory(InventoryItem item);
+	std::vector<InventoryItem> getInventory();
+	InventoryItem getCurrentItem();
 private:
 	std::vector<InventoryItem> inventory;
+	InventoryItem currentItem;
 };
 

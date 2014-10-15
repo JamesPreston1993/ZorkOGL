@@ -15,6 +15,7 @@ public:
 	Player* getPlayer();
 	Enemy* getOpponent();
 	void setCurrentScene(Scene::SceneID nextScene);
+	Scene* getCurrentScene();
 private:
 	bool isRunning;
 	Player* player;

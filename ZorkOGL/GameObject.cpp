@@ -69,13 +69,44 @@ void GameObject::draw(SDL_Renderer* renderer)
 		case PLAYER : 
 			imagePath += "playerImg.bmp"; break;
 		case GUARD :
-			imagePath += "enemyImg.bmp"; break;
+			imagePath += "guardImgFull.bmp";
+			x = 200;
+			y = 140;
+			height = 400;
+			width = 200;
+			break;
 		case CAPTAIN : 
-			imagePath += "enemyImg.bmp"; break;
+			imagePath += "captainImgFull.bmp";
+			x = 400;
+			y = 140;
+			height = 400;
+			width = 200;
+			break;
 		case BOSS :
-			imagePath += "enemyImg.bmp"; break;
+			imagePath += "bossImgFull.bmp";
+			x = 600;
+			y = 140;
+			height = 400;
+			width = 200;
+			break;
 		case KEY : 
-			imagePath += "key.bmp"; break;
+			imagePath += "key.bmp";
+			x = 500;
+			y= 400;
+			width = 64;
+			height = 64;
+			break;
+		case HAND : 
+			imagePath += "hand.bmp"; break;
+		case EYE : 
+			imagePath += "eye.bmp"; break;
+		case MAP:
+			imagePath += "map.bmp";
+			x = 200;
+			y= 200;
+			width = 64;
+			height = 64;
+			break;
 		
 		// TODO: Other items
 	}
@@ -96,4 +127,13 @@ void GameObject::draw(SDL_Renderer* renderer)
 	SDL_RenderCopy(renderer,texture, NULL, pictureRect);
 	SDL_DestroyTexture(texture);
 	delete pictureRect;
+}
+bool GameObject::mouseInside(int mouseX, int mouseY)
+{
+	if(mouseX > x && mouseX < (x + width) &&
+		mouseY > y && mouseY < (y + height))
+	{
+		return true;
+	}
+	return false;
 }

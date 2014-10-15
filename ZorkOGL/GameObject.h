@@ -34,6 +34,7 @@ public:
 	ID getID();
 	void setID(ID id);
 	void draw(SDL_Renderer* renderer);
+	bool mouseInside(int mouseX, int mouseY);
 private:
 	int x;
 	int y;

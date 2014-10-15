@@ -7,9 +7,9 @@
 Game::Game(void)
 {	
 	isRunning = true;
-	stateChanged = true;	
-	player = new Player("ARAGORN", 9, 2, 5, 6);	
-	currentScene = new Scene(Scene::MAIN_HALL);
+	stateChanged = true;
+	player = new Player("ARAGORN", 9, 2, 5, 6);
+	currentScene = new Scene(Scene::GATES);
 
 	// If the scene has an enemy, set the current enemy to that scene's main enemy
 	// Otherwise, set to NULL
@@ -39,7 +39,7 @@ void Game::run()
 	InputListener* input = new InputListener(this);
 	
 	// Create the GUI specifying the screen width and height
-	GUI gui(1366, 768);	
+	GUI gui(1280, 720);	
 	
 	// Start the game loop
 	while(isRunning)
@@ -67,6 +67,7 @@ void Game::run()
 		
 			// Flush to screen
 			gui.flush();
+			gui.clear();
 		}		
 	}
 	// Delete the input listener
@@ -107,6 +108,7 @@ void Game::setCurrentScene(Scene::SceneID newScene)
 {
 	if(newScene != currentScene->getID())
 	{
+		delete currentScene;
 		currentScene = new Scene(newScene);
 		// If the scene has an enemy, set the current enemy to that scene's main enemy
 		// Otherwise, set to NULL
@@ -121,4 +123,9 @@ void Game::setCurrentScene(Scene::SceneID newScene)
 			enemySelected = false;
 		}
 	}
+}
+
+Scene* Game::getCurrentScene()
+{
+	return currentScene;
 }

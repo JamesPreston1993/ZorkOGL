@@ -85,16 +85,13 @@ void GUI::drawCharacter(Character* character)
 		startX = (3 * margin) + (2 * panelWidth);
 		startY = screenHeight - panelHeight;
 	}
+	
 	// Draw the holder rectangle
-	// Set render color to dark grey
-    SDL_SetRenderDrawColor(renderer, 65, 65, 65, 255 );
-
 	SDL_Rect* mainRect = new SDL_Rect();
 	mainRect->x = startX;
 	mainRect->y = startY;
 	mainRect->w = panelWidth;
 	mainRect->h = panelHeight - margin;
-	//SDL_RenderFillRect(renderer, mainRect);
 
 	SDL_Surface* bkImage = SDL_LoadBMP("images/stone2.bmp");
 	if (bkImage == NULL)
@@ -107,13 +104,11 @@ void GUI::drawCharacter(Character* character)
 	SDL_RenderCopy(renderer,bkTexture, NULL, mainRect);
 	SDL_DestroyTexture(bkTexture);
 
-	// Set render color to medium grey
-    SDL_SetRenderDrawColor(renderer, 10, 10, 10, 255 );
-
 	SDL_Rect* pictureRect = new SDL_Rect();
 	pictureRect->x = startX + margin;
 	pictureRect->y = startY + margin;
-	pictureRect->w = panelWidth / 2 - margin;
+	//pictureRect->w = panelWidth / 2 - margin;
+	pictureRect->w = mainRect->h - (2 * margin);
 	pictureRect->h = mainRect->h - (2 * margin);
 	
 	SDL_Surface* image = SDL_LoadBMP(character->getHUDImage().c_str());
@@ -138,15 +133,11 @@ void GUI::drawCharacter()
 	int startX = (3 * margin) + (2 * panelWidth);
 	int startY = screenHeight - panelHeight;
 
-	// Set render color to medium grey
-    SDL_SetRenderDrawColor(renderer, 65, 65, 65, 255 );
-
 	SDL_Rect* mainRect = new SDL_Rect();
 	mainRect->x = startX;
 	mainRect->y = startY;
 	mainRect->w = panelWidth;
 	mainRect->h = panelHeight - margin;
-	//SDL_RenderFillRect(renderer, mainRect);
 
 	SDL_Surface* bkImage = SDL_LoadBMP("images/stone2.bmp");
 	if (bkImage == NULL)
@@ -168,16 +159,12 @@ void GUI::drawInventory(Player* player)
 	//int height = panelHeight - margin;
 	int startX = panelWidth + (2 * margin);
 	int startY = screenHeight - panelHeight;
-	
-	// Set render color to medium grey
-    SDL_SetRenderDrawColor(renderer, 65, 65, 65, 255 );
 
 	SDL_Rect* mainRect = new SDL_Rect();
 	mainRect->x = startX;
 	mainRect->y = startY;
 	mainRect->w = panelWidth;
 	mainRect->h = panelHeight - margin;
-	//SDL_RenderFillRect(renderer, mainRect);
 
 	SDL_Surface* bkImage = SDL_LoadBMP("images/stone2.bmp");
 	if (bkImage == NULL)
@@ -196,6 +183,9 @@ void GUI::drawInventory(Player* player)
 	int width = (panelHeight - (5 * margin)) / 3;
 	int height = width;
 
+	int inventoryIndex = 0;
+	int inventorySize = player->getInventory().size();
+
 	for(int col = 0; col < 3 * width; col+=width + margin)
 	{
 		for(int row = 0; row < 3 * height; row += height + margin)
@@ -207,20 +197,12 @@ void GUI::drawInventory(Player* player)
 			invRect->h = height;			
 			SDL_RenderFillRect(renderer, invRect);
 
-			if(row == 0 && col == 0)
+			if(inventoryIndex < inventorySize)
 			{
-				InventoryItem key(GameObject::KEY);
-				SDL_Surface* image = SDL_LoadBMP(key.getItemImage().c_str());
-				if(image == NULL)
-				{
-					cerr << "SDL_LoadBMP() Failed: " << SDL_GetError() << endl;
-					exit(0);
-				}
-				SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, image);
-				SDL_FreeSurface(image);
-				SDL_RenderCopy(renderer,texture,NULL,invRect);
+				player->getInventory().at(inventoryIndex).drawToHUD(renderer, invRect->x, invRect->y, width);
 			}
 
+			inventoryIndex++;
 			delete invRect;
 		}
 	}	
@@ -292,7 +274,7 @@ void GUI::drawStats(int x, int y, int w, int h, Character* c)
 		SDL_Rect* title = new SDL_Rect();
 		title->x = x + (2 * margin) + w;
 		title->y = y + ((h / 6) * i);
-		title->w = w;
+		title->w = panelWidth - (w + margin);
 		title->h = h / 6;
 
 		// Render

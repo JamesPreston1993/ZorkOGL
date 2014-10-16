@@ -11,8 +11,9 @@ Player::Player(std::string name, int strength, int agility, int endurance, int c
 	// Add items to inventory
 	this->inventory.push_back(InventoryItem(GameObject::HAND));
 	this->inventory.push_back(InventoryItem(GameObject::EYE));
-	//this->inventory.push_back(InventoryItem(GameObject::KEY));
-	this->currentItem = inventory.at(0);
+	this->inventory.push_back(InventoryItem(GameObject::SWORD));
+	currentItemIndex = 0;
+	this->currentItem = inventory.at(currentItemIndex);
 }
 
 Player::~Player(void)
@@ -35,4 +36,22 @@ std::vector<InventoryItem> Player::getInventory()
 InventoryItem Player::getCurrentItem()
 {
 	return currentItem;
+}
+
+int Player::getCurrentItemIndex()
+{
+	return currentItemIndex;
+}
+void Player::setCurrentItemIndex(int offset)
+{
+	currentItemIndex += offset;
+	if(currentItemIndex < 0)
+	{
+		currentItemIndex = inventory.size() - 1;
+	}
+	else if(currentItemIndex > inventory.size() - 1)
+	{
+		currentItemIndex = 0;
+	}
+
 }

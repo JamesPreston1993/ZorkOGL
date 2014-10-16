@@ -69,45 +69,46 @@ void GameObject::draw(SDL_Renderer* renderer)
 		case PLAYER : 
 			imagePath += "playerImg.bmp"; break;
 		case GUARD :
-			imagePath += "guardImgFull.bmp";
+			imagePath += "guardImgFull.gif";
 			x = 200;
 			y = 140;
 			height = 400;
 			width = 200;
 			break;
 		case CAPTAIN : 
-			imagePath += "captainImgFull.bmp";
+			imagePath += "captainImgFull.gif";
 			x = 400;
 			y = 140;
 			height = 400;
 			width = 200;
 			break;
 		case BOSS :
-			imagePath += "bossImgFull.bmp";
+			imagePath += "bossImgFull.gif";
 			x = 600;
 			y = 140;
 			height = 400;
 			width = 200;
 			break;
 		case KEY : 
-			imagePath += "key.bmp";
+			imagePath += "key.gif";
 			x = 500;
 			y= 400;
-			width = 64;
-			height = 64;
+			width = 100;
+			height = 100;
 			break;
 		case HAND : 
-			imagePath += "hand.bmp"; break;
+			imagePath += "hand.gif"; break;
 		case EYE : 
-			imagePath += "eye.bmp"; break;
+			imagePath += "eye.gif"; break;
 		case MAP:
-			imagePath += "map.bmp";
+			imagePath += "map.gif";
 			x = 200;
 			y= 200;
-			width = 64;
-			height = 64;
+			width = 100;
+			height = 100;
 			break;
-		
+		case SWORD : 
+			imagePath += "sword.gif"; break;
 		// TODO: Other items
 	}
 
@@ -117,9 +118,10 @@ void GameObject::draw(SDL_Renderer* renderer)
 	pictureRect->w = width;
 	pictureRect->h = height;
 	
-	SDL_Surface* image = SDL_LoadBMP(imagePath.c_str());
+	SDL_Surface* image = IMG_Load(imagePath.c_str());
 	if (image == NULL)
 	{
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR", SDL_GetError(), NULL);
 		exit(0);
 	}
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, image);

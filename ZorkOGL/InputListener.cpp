@@ -49,13 +49,24 @@ bool InputListener::getKeyboardInput (SDL_Event event)
 		{
 			return false;
 		}
+		// Press Z to go to previous inventory item
+		if(event.key.keysym.sym == SDLK_z)
+		{
+			game->getPlayer()->setCurrentItemIndex(-1);
+			game->setStateChanged(true);
+		}
+		// Press X to go to next inventory item
+		if(event.key.keysym.sym == SDLK_x)
+		{
+			game->getPlayer()->setCurrentItemIndex(1);
+			game->setStateChanged(true);
+		}
 	}
 	return true;
 }
 
 void InputListener::getMouseInput(SDL_Event event)
 {
-	
 	if(event.type == SDL_MOUSEBUTTONDOWN)
 	{
 		int mouseX = event.button.x;
@@ -70,8 +81,7 @@ void InputListener::getMouseInput(SDL_Event event)
 					// DEBUG 
 					game->setEnemySelected(false);
 					game->getCurrentScene()->removeEnemy(game->getCurrentScene()->getEnemy());
-					//delete game->getOpponent();
-					game->setCurrentScene(Scene::MAIN_HALL);
+					game->setCurrentScene(game->getCurrentScene()->getNextScene());
 				}
 				game->setStateChanged(true);
 			}

@@ -13,8 +13,11 @@ public:
 	void addToInventory(InventoryItem item);
 	std::vector<InventoryItem> getInventory();
 	InventoryItem getCurrentItem();
+	int getCurrentItemIndex();
+	void setCurrentItemIndex(int offset);
 private:
 	std::vector<InventoryItem> inventory;
 	InventoryItem currentItem;
+	int currentItemIndex;
 };
 

@@ -1,4 +1,5 @@
 #include "InventoryItem.h"
+#include <SDL_image.h>
 
 InventoryItem::InventoryItem() : GameObject()
 {
@@ -32,6 +33,12 @@ InventoryItem::InventoryItem(ID id) : GameObject()
 			this->weight = 0;
 			this->value = 0;
 			break;
+		case SWORD:
+			this->setID(id);
+			this->name = "Sword";
+			this->weight = 5;
+			this->value = 20;
+			break;
 	}
 }
 
@@ -45,13 +52,15 @@ void InventoryItem::drawToHUD(SDL_Renderer* renderer, int x, int y, int size)
 	switch(this->getID())
 	{
 		case KEY : 
-			imagePath += "key.bmp"; break;
+			imagePath += "key.gif"; break;
 		case HAND : 
-			imagePath += "hand.bmp"; break;
+			imagePath += "hand.gif"; break;
 		case EYE : 
-			imagePath += "eye.bmp"; break;
+			imagePath += "eye.gif"; break;
 		case MAP : 
-			imagePath += "map.bmp"; break;
+			imagePath += "map.gif"; break;
+		case SWORD:
+			imagePath += "sword.gif"; break;
 	}
 
 	SDL_Rect* pictureRect = new SDL_Rect();
@@ -59,10 +68,11 @@ void InventoryItem::drawToHUD(SDL_Renderer* renderer, int x, int y, int size)
 	pictureRect->y = y;
 	pictureRect->w = size;
 	pictureRect->h = size;
-	
-	SDL_Surface* image = SDL_LoadBMP(imagePath.c_str());
+
+	SDL_Surface* image = IMG_Load(imagePath.c_str());
 	if (image == NULL)
 	{
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR", SDL_GetError(), NULL);
 		exit(0);
 	}
 

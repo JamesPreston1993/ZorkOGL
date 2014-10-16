@@ -29,11 +29,13 @@ public:
 	bool hasItems();
 	void removeEnemy(Enemy* enemy);
 	void removeItem(InventoryItem item);
+	SceneID getNextScene();
 private:
 	std::string name;
 	std::string image;
 	std::vector<InventoryItem> items;
 	Enemy* enemy;
-	SceneID id;	
+	SceneID id;
+	SceneID nextScene;
 };
 

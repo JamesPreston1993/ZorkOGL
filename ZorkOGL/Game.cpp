@@ -9,7 +9,7 @@ Game::Game(void)
 	isRunning = true;
 	stateChanged = true;
 	player = new Player("ARAGORN", 9, 2, 5, 6);
-	currentScene = new Scene(Scene::GATES);
+	currentScene = new Scene(Scene::COURTYARD);
 
 	// If the scene has an enemy, set the current enemy to that scene's main enemy
 	// Otherwise, set to NULL
@@ -48,8 +48,8 @@ void Game::run()
 		if(!input->listen())
 		{
 			isRunning = false;
-		}
-		
+		}		
+
 		// Render if the state has changed - avoids unnecessary rendering
 		if(stateChanged)
 		{

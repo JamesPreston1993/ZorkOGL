@@ -10,6 +10,8 @@ GUI::GUI(int width, int height)
 	panelWidth = (screenWidth - (4 * margin)) / 3;
 	panelHeight = (screenHeight - (3 * margin)) / 4;
 
+	SDL_ShowCursor(SDL_DISABLE);
+
 	setupWindow();
 }
 
@@ -190,6 +192,15 @@ void GUI::drawInventory(Player* player)
 	{
 		for(int row = 0; row < 3 * height; row += height + margin)
 		{
+			if(inventoryIndex == player->getCurrentItemIndex())
+			{
+				SDL_SetRenderDrawColor(renderer, 255, 220, 100, 255 );
+			}
+			else
+			{
+				SDL_SetRenderDrawColor(renderer, 10, 10, 10, 255 );
+			}			
+	
 			SDL_Rect* invRect = new SDL_Rect();
 			invRect->x = startX + row + margin;
 			invRect->y = startY + col + margin;
@@ -199,7 +210,7 @@ void GUI::drawInventory(Player* player)
 
 			if(inventoryIndex < inventorySize)
 			{
-				player->getInventory().at(inventoryIndex).drawToHUD(renderer, invRect->x, invRect->y, width);
+				player->getInventory().at(inventoryIndex).drawToHUD(renderer, invRect->x, invRect->y, width);				
 			}
 
 			inventoryIndex++;
@@ -302,6 +313,8 @@ void GUI::drawGameScreen(Scene* currentScene)
 
 	// Create and draw scene
 	currentScene->drawScene(renderer, mainRect);
+
+	// Draw level title at top of page
 
 	// Free resources
 	delete mainRect;

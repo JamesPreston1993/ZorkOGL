@@ -18,7 +18,7 @@ public:
 	void drawCharacter(Character* character);
 	void drawCharacter();
 	void drawInventory(Player* player);
-	void drawGameScreen(Scene* currentScene);		
+	void drawGameScreen(Scene* currentScene);
 	void flush();
 	void clear();
 

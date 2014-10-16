@@ -17,26 +17,31 @@ Scene::Scene(SceneID id)
 			enemy = new Enemy("HIGRON", GameObject::GUARD);
 			items.push_back(InventoryItem(GameObject::KEY));
 			items.push_back(InventoryItem(GameObject::MAP));
+			nextScene = SceneID::TOWER;
 			break;
 		case(TOWER) :
 			name = "GUARD TOWER";
 			image = "images/courtyard.bmp";
 			enemy = new Enemy("HIGRON", GameObject::GUARD);
-			break;
-		case(COURTYARD) :
-			name = "COURTYARD";
-			image = "images/courtyard.bmp";
-			enemy = new Enemy("ROGHAR", GameObject::CAPTAIN);
+			nextScene = SceneID::BARRACKS;
 			break;
 		case(BARRACKS) :
 			name = "GUARD BARRACKS";
 			image = "images/courtyard.bmp";
 			enemy = new Enemy("TALON", GameObject::GUARD);
+			nextScene = SceneID::COURTYARD;
+			break;
+		case(COURTYARD) :
+			name = "COURTYARD";
+			image = "images/courtyard.bmp";
+			enemy = new Enemy("ROGHAR", GameObject::CAPTAIN);
+			nextScene = SceneID::MAIN_HALL;
 			break;
 		case(MAIN_HALL) :
 			name = "CASTLE HALL";
 			image = "images/courtyard.bmp";
 			enemy = new Enemy("SAURON", GameObject::BOSS);
+			nextScene = SceneID::TREASURE_ROOM;
 			break;
 	}
 }
@@ -116,6 +121,10 @@ void Scene::removeItem(InventoryItem item)
 
 void Scene::removeEnemy(Enemy* enemy)
 {
-	//delete enemy;
 	enemy->setID(GameObject::NONE);
+}
+
+Scene::SceneID Scene::getNextScene()
+{
+	return nextScene;
 }

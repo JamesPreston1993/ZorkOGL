@@ -30,6 +30,7 @@ public:
 	void removeEnemy(Enemy* enemy);
 	void removeItem(InventoryItem item);
 	SceneID getNextScene();
+	std::string getName();
 private:
 	std::string name;
 	std::string image;

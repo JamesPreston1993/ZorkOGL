@@ -43,6 +43,11 @@ Scene::Scene(SceneID id)
 			enemy = new Enemy("SAURON", GameObject::BOSS);
 			nextScene = SceneID::TREASURE_ROOM;
 			break;
+		case(TREASURE_ROOM) :
+			name = "TREASURE ROOM";
+			image = "images/courtyard.bmp";			
+			nextScene = SceneID::GATES;
+			break;
 	}
 }
 
@@ -127,4 +132,8 @@ void Scene::removeEnemy(Enemy* enemy)
 Scene::SceneID Scene::getNextScene()
 {
 	return nextScene;
+}
+std::string Scene::getName()
+{
+	return name;
 }

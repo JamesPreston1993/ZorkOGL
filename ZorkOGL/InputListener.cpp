@@ -86,18 +86,14 @@ void InputListener::getMouseInput(SDL_Event event)
 				game->setStateChanged(true);
 			}
 		}
-		else
+		for(int i = 0; i < game->getCurrentScene()->getItems().size(); i++)
 		{
-			for(int i = 0; i < game->getCurrentScene()->getItems().size(); i++)
+			if(game->getCurrentScene()->getItems().at(i).mouseInside(mouseX, mouseY))
 			{
-				if(game->getCurrentScene()->getItems().at(i).mouseInside(mouseX, mouseY))
-				{
-					game->getPlayer()->addToInventory(game->getCurrentScene()->getItems().at(i));
-					game->getCurrentScene()->removeItem(game->getCurrentScene()->getItems().at(i));
-					game->setStateChanged(true);
-					break;
-										
-				}
+				game->getPlayer()->addToInventory(game->getCurrentScene()->getItems().at(i));
+				game->getCurrentScene()->removeItem(game->getCurrentScene()->getItems().at(i));
+				game->setStateChanged(true);
+				break;					
 			}
 		}
 	}

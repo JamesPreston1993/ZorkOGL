@@ -9,7 +9,7 @@ Game::Game(void)
 	isRunning = true;
 	stateChanged = true;
 	player = new Player("ARAGORN", 9, 2, 5, 6);
-	currentScene = new Scene(Scene::COURTYARD);
+	currentScene = new Scene(Scene::GATES);
 
 	// If the scene has an enemy, set the current enemy to that scene's main enemy
 	// Otherwise, set to NULL
@@ -40,7 +40,7 @@ void Game::run()
 	
 	// Create the GUI specifying the screen width and height
 	GUI gui(1280, 720);	
-	
+
 	// Start the game loop
 	while(isRunning)
 	{		

@@ -75,25 +75,28 @@ void InputListener::getMouseInput(SDL_Event event)
 		{
 			if(game->getOpponent()->mouseInside(mouseX, mouseY))
 			{
+				game->getOpponent()->dodge();
 				game->getOpponent()->setHealth(game->getOpponent()->getHealth() - game->getPlayer()->getStrength());
 				if(game->getOpponent()->getHealth() == 0)
 				{
 					// DEBUG 
 					game->setEnemySelected(false);
-					game->getCurrentScene()->removeEnemy(game->getCurrentScene()->getEnemy());
-					game->setCurrentScene(game->getCurrentScene()->getNextScene());
+					game->getCurrentScene()->removeEnemy(game->getCurrentScene()->getEnemy());					
 				}
 				game->setStateChanged(true);
 			}
 		}
-		for(int i = 0; i < game->getCurrentScene()->getItems().size(); i++)
+		else
 		{
-			if(game->getCurrentScene()->getItems().at(i).mouseInside(mouseX, mouseY))
+			for(int i = 0; i < game->getCurrentScene()->getItems().size(); i++)
 			{
-				game->getPlayer()->addToInventory(game->getCurrentScene()->getItems().at(i));
-				game->getCurrentScene()->removeItem(game->getCurrentScene()->getItems().at(i));
-				game->setStateChanged(true);
-				break;					
+				if(game->getCurrentScene()->getItems().at(i).mouseInside(mouseX, mouseY))
+				{
+					game->getPlayer()->addToInventory(game->getCurrentScene()->getItems().at(i));
+					game->getCurrentScene()->removeItem(game->getCurrentScene()->getItems().at(i));
+					game->setStateChanged(true);
+					break;					
+				}
 			}
 		}
 	}

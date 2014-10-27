@@ -18,7 +18,7 @@ public:
 		HAND,
 		EYE,
 		MAP,
-		FLASK,
+		TREASURE,
 		// Default
 		NONE
 	};

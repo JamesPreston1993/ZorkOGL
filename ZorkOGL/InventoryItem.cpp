@@ -11,39 +11,50 @@ InventoryItem::InventoryItem(ID id) : GameObject()
 	{
 		case KEY:
 			this->setID(id);
-			this->name = "Key";
+			this->name = "KEY";
 			this->weight = 1;
 			this->value = 0;
 			break;
 		case HAND :
 			this->setID(id);
-			this->name = "Hand";
+			this->name = "HAND";
 			this->weight = 0;
 			this->value = 0;
 			break;
 		case EYE:
 			this->setID(id);
-			this->name = "Eye";
+			this->name = "EYE";
 			this->weight = 0;
 			this->value = 0;
 			break;
 		case MAP:
 			this->setID(id);
-			this->name = "Map";
+			this->name = "MAP";
 			this->weight = 0;
 			this->value = 0;
 			break;
 		case SWORD:
 			this->setID(id);
-			this->name = "Sword";
+			this->name = "SWORD";
 			this->weight = 5;
 			this->value = 20;
+			break;
+		case TREASURE:
+			this->setID(id);
+			this->name = "GOLD";
+			this->weight = 20;
+			this->value = 1000;
 			break;
 	}
 }
 
 InventoryItem::~InventoryItem(void)
 {
+}
+
+std::string InventoryItem::getName()
+{
+	return this->name;
 }
 
 void InventoryItem::drawToHUD(SDL_Renderer* renderer, int x, int y, int size)
@@ -61,6 +72,8 @@ void InventoryItem::drawToHUD(SDL_Renderer* renderer, int x, int y, int size)
 			imagePath += "map.gif"; break;
 		case SWORD:
 			imagePath += "sword.gif"; break;
+		case TREASURE:
+			imagePath += "treasureChest.gif"; break;
 	}
 
 	SDL_Rect* pictureRect = new SDL_Rect();

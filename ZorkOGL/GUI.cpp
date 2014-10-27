@@ -157,8 +157,6 @@ void GUI::drawCharacter()
 
 void GUI::drawInventory(Player* player)
 {
-	//int width = (screenWidth - (4 * margin)) / 3;
-	//int height = panelHeight - margin;
 	int startX = panelWidth + (2 * margin);
 	int startY = screenHeight - panelHeight;
 
@@ -213,8 +211,77 @@ void GUI::drawInventory(Player* player)
 			inventoryIndex++;
 			delete invRect;
 		}
-	}	
+	}
+
+	drawControls(mainRect->x + panelWidth / 2, mainRect->y, panelWidth / 2, panelHeight, player);
 	delete mainRect;
+}
+
+void GUI::drawControls(int x, int y, int w, int h, Player* player)
+{
+	TTF_Font* font = TTF_OpenFont("font/TerminusTTF-4.39.ttf", 18);
+	if(font == NULL)
+	{
+		cerr << "Font error: " << TTF_GetError() << endl;
+		TTF_Quit();
+		SDL_Quit();
+		exit(0);
+	}
+
+	SDL_Color textColor = {255, 255, 255};
+	SDL_Surface* surface = NULL;
+	SDL_Texture* texture = NULL;
+
+	for(int i = 0; i < 4; i++)
+	{
+		std::string message;
+		switch(i)
+		{
+			case 0 : 
+				message = player->getCurrentItem().getName();
+				break;
+			case 1 :
+				message = "Z/X: NEXT";
+				break;
+			case 2 :
+				message = "F  : USE ";
+				break;
+			case 3 :
+				message = "ESC: QUIT";
+				break;			
+			default:
+				message = "";
+				break;
+		}
+		
+		// Create surface
+		surface = TTF_RenderText_Solid(font, message.c_str(), textColor);
+		if(surface == NULL)
+		{
+			cerr << "Surface error: " << TTF_GetError() << endl;
+			TTF_Quit();
+			SDL_Quit();
+			exit(0);
+		}
+		// Create texture and free surface as we are done with it
+		texture = SDL_CreateTextureFromSurface(renderer, surface);		
+		SDL_FreeSurface(surface);
+		
+		// Create a rectangle for the Texture
+		SDL_Rect* title = new SDL_Rect();
+		title->x = x;
+		title->y = y + ((h / 4) * i);
+		title->w = w;
+		title->h = h / 4;
+
+		// Render
+		SDL_RenderCopy(renderer,texture, NULL, title);
+
+		// Destroy the title rectangle and texture when we are done with them
+		delete title;
+		SDL_DestroyTexture(texture);
+	}
+	TTF_CloseFont(font);
 }
 
 void GUI::drawStats(int x, int y, int w, int h, Character* c)

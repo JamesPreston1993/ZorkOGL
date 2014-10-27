@@ -31,6 +31,7 @@ public:
 	void removeItem(InventoryItem item);
 	SceneID getNextScene();
 	std::string getName();
+	bool isComplete();
 private:
 	std::string name;
 	std::string image;

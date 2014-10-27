@@ -18,7 +18,8 @@ int GameObject::getX()
 
 void GameObject::setX(int x)
 {
-	this->x = x;
+	if(x >= 0 && x <= 1280 - width)
+		this->x = x;
 }
 
 int GameObject::getY()
@@ -59,6 +60,45 @@ GameObject::ID GameObject::getID()
 void GameObject::setID(ID id)
 {
 	this->id = id;
+	switch(id)
+	{
+		case GUARD :
+			x = 200;
+			y = 140;
+			height = 400;
+			width = 200;
+			break;
+		case CAPTAIN : 
+			x = 400;
+			y = 140;
+			height = 400;
+			width = 200;
+			break;
+		case BOSS :
+			x = 600;
+			y = 140;
+			height = 400;
+			width = 200;
+			break;
+		case KEY : 
+			x = 500;
+			y= 400;
+			width = 100;
+			height = 100;
+			break;
+		case MAP:
+			x = 200;
+			y= 200;
+			width = 100;
+			height = 100;
+			break;
+		case TREASURE:
+			x = 600;
+			y = 200;
+			width = 200;
+			height = 200;
+			break;
+	}
 }
 
 void GameObject::draw(SDL_Renderer* renderer)
@@ -69,46 +109,23 @@ void GameObject::draw(SDL_Renderer* renderer)
 		case PLAYER : 
 			imagePath += "playerImg.bmp"; break;
 		case GUARD :
-			imagePath += "guardImgFull.gif";
-			x = 200;
-			y = 140;
-			height = 400;
-			width = 200;
-			break;
+			imagePath += "guardImgFull.gif"; break;
 		case CAPTAIN : 
-			imagePath += "captainImgFull.gif";
-			x = 400;
-			y = 140;
-			height = 400;
-			width = 200;
-			break;
+			imagePath += "captainImgFull.gif"; break;
 		case BOSS :
-			imagePath += "bossImgFull.gif";
-			x = 600;
-			y = 140;
-			height = 400;
-			width = 200;
-			break;
+			imagePath += "bossImgFull.gif";	break;
 		case KEY : 
-			imagePath += "key.gif";
-			x = 500;
-			y= 400;
-			width = 100;
-			height = 100;
-			break;
+			imagePath += "key.gif";	break;
 		case HAND : 
 			imagePath += "hand.gif"; break;
 		case EYE : 
 			imagePath += "eye.gif"; break;
 		case MAP:
-			imagePath += "map.gif";
-			x = 200;
-			y= 200;
-			width = 100;
-			height = 100;
-			break;
+			imagePath += "map.gif";	break;
 		case SWORD : 
 			imagePath += "sword.gif"; break;
+		case TREASURE : 
+			imagePath += "treasureChest.gif"; break;
 		// TODO: Other items
 	}
 

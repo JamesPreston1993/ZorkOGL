@@ -30,5 +30,6 @@ private:
 	static const short margin = 5;
 	SDL_Window* window;
 	SDL_Renderer* renderer;
+	void drawControls(int x, int y, int w, int h, Player* player);
 	void drawStats(int x, int y, int w, int h, Character* c);
 };

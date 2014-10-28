@@ -9,5 +9,6 @@ public:
 	Enemy();
 	Enemy(std::string name, ID id);
 	~Enemy(void);
+	void dodge();
 };
 

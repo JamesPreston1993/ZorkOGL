@@ -29,7 +29,7 @@ Enemy::Enemy(std::string name, ID id)
 	else if(id == BOSS)
 	{
 		this->setStrength(8);
-		this->setAgility(2);
+		this->setAgility(9);
 		this->setEndurance(7);
 		this->setCharisma(9);
 		this->setHUDImage("images/bossImg.bmp");
@@ -38,4 +38,18 @@ Enemy::Enemy(std::string name, ID id)
 
 Enemy::~Enemy()
 {
+}
+
+void Enemy::dodge()
+{
+	int chance = rand() % 10 + 1;
+	if(this->getAgility() >= chance)
+	{
+		// Move character
+		int direction = rand() % 10 + 1;
+		if(direction > 5)
+			this->setX(this->getX() + this->getWidth());
+		else
+			this->setX(this->getX() - this->getWidth());
+	}
 }

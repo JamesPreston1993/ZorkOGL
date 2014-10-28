@@ -47,11 +47,11 @@ void Player::setCurrentItemIndex(int offset)
 	currentItemIndex += offset;
 	if(currentItemIndex < 0)
 	{
-		currentItemIndex = inventory.size() - 1;
+		currentItemIndex = inventory.size() - 1;		
 	}
 	else if(currentItemIndex > inventory.size() - 1)
 	{
 		currentItemIndex = 0;
 	}
-
+	currentItem = inventory.at(currentItemIndex);
 }

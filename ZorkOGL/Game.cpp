@@ -29,7 +29,6 @@ Game::~Game(void)
 {		
 	delete player;
 	delete currentScene;
-	// Delete enemy if they exist - doesn't work
 	SDL_Quit();
 }
 
@@ -53,6 +52,8 @@ void Game::run()
 		// Render if the state has changed - avoids unnecessary rendering
 		if(stateChanged)
 		{
+			if(currentScene->isComplete())
+				setCurrentScene(currentScene->getNextScene());
 			stateChanged = false;			
 			gui.drawCharacter(player);
 			gui.drawInventory(player);

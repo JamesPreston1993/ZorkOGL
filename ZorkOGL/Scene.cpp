@@ -45,8 +45,9 @@ Scene::Scene(SceneID id)
 			break;
 		case(TREASURE_ROOM) :
 			name = "TREASURE ROOM";
-			image = "images/courtyard.bmp";			
-			nextScene = SceneID::GATES;
+			image = "images/courtyard.bmp";
+			items.push_back(InventoryItem(GameObject::TREASURE));
+			nextScene = SceneID::TREASURE_ROOM;
 			break;
 	}
 }
@@ -136,4 +137,11 @@ Scene::SceneID Scene::getNextScene()
 std::string Scene::getName()
 {
 	return name;
+}
+
+bool Scene::isComplete()
+{
+	if(!hasEnemies() && !hasItems())
+		return true;
+	return false;
 }

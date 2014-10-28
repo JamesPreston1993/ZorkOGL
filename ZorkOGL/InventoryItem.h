@@ -9,6 +9,7 @@ public:
 	InventoryItem(ID id);
 	~InventoryItem(void);
 	void drawToHUD(SDL_Renderer* renderer, int x, int y, int size);
+	std::string getName();
 private:
 	std::string name;
 	int weight;

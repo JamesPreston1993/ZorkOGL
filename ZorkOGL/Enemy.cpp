@@ -67,7 +67,7 @@ bool Enemy::attack(Player* player)
 
 bool Enemy::canAttack(int time)
 {
-	if(10 - this->getEndurance() == time)
+	if(10 * (10 - this->getEndurance()) <= time)
 	{
 		return true;
 	}

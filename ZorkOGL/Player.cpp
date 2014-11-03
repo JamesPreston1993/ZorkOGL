@@ -14,7 +14,6 @@ Player::Player(std::string name, int strength, int agility, int endurance, int l
 	this->inventory.push_back(InventoryItem(GameObject::EYE));
 	currentItemIndex = 0;
 	this->currentItem = inventory.at(currentItemIndex);
-	this->blocking = false;
 }
 
 Player::~Player(void)
@@ -55,17 +54,4 @@ void Player::setCurrentItemIndex(int offset)
 		currentItemIndex = 0;
 	}
 	currentItem = inventory.at(currentItemIndex);
-}
-
-bool Player::isBlocking()
-{
-	return blocking;
-}
-
-void Player::setBlocking(bool blocking)
-{
-	if(blocking != this->blocking)
-	{
-		this->blocking = blocking;
-	}
 }

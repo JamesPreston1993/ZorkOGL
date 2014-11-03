@@ -71,6 +71,8 @@ void InputListener::getMouseInput(SDL_Event event)
 	{
 		int mouseX = event.button.x;
 		int mouseY = event.button.y;
+		
+		// Check if the player is attacking an enemy or picking up an item
 		if(game->getEnemySelected())
 		{
 			if(game->getOpponent()->mouseInside(mouseX, mouseY))
@@ -79,7 +81,6 @@ void InputListener::getMouseInput(SDL_Event event)
 				game->getOpponent()->setHealth(game->getOpponent()->getHealth() - game->getPlayer()->getStrength());
 				if(game->getOpponent()->getHealth() == 0)
 				{
-					// DEBUG 
 					game->setEnemySelected(false);
 					game->getCurrentScene()->removeEnemy(game->getCurrentScene()->getEnemy());					
 				}
@@ -99,9 +100,5 @@ void InputListener::getMouseInput(SDL_Event event)
 				}
 			}
 		}
-	}
-	if(event.type == SDL_MOUSEBUTTONUP)
-	{
-
 	}
 }

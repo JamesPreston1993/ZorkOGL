@@ -15,12 +15,9 @@ public:
 	InventoryItem getCurrentItem();
 	int getCurrentItemIndex();
 	void setCurrentItemIndex(int offset);
-	bool isBlocking();
-	void setBlocking(bool blocking);
 private:
 	std::vector<InventoryItem> inventory;
 	InventoryItem currentItem;
 	int currentItemIndex;
-	bool blocking;
 };
 

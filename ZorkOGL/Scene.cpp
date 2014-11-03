@@ -13,21 +13,22 @@ Scene::Scene(SceneID id)
 	{
 		case(GATES) :
 			name = "CASTLE GATES";
-			image = "images/stone.bmp";
+			image = "images/gates.bmp";
 			enemy = new Enemy("HIGRON", GameObject::GUARD);
 			items.push_back(InventoryItem(GameObject::MAP));
 			nextScene = SceneID::TOWER;
 			break;
 		case(TOWER) :
 			name = "GUARD TOWER";
-			image = "images/courtyard.bmp";
-			enemy = new Enemy("HIGRON", GameObject::GUARD);
+			image = "images/tower.bmp";
+			enemy = new Enemy("TALION", GameObject::GUARD);
 			nextScene = SceneID::BARRACKS;
 			break;
 		case(BARRACKS) :
 			name = "GUARD BARRACKS";
-			image = "images/courtyard.bmp";
+			image = "images/barracks.bmp";
 			items.push_back(InventoryItem(GameObject::KEY));
+			enemy = new Enemy("DURIN", GameObject::GUARD);
 			nextScene = SceneID::COURTYARD;
 			break;
 		case(COURTYARD) :
@@ -38,13 +39,13 @@ Scene::Scene(SceneID id)
 			break;
 		case(MAIN_HALL) :
 			name = "CASTLE HALL";
-			image = "images/courtyard.bmp";
+			image = "images/hall.bmp";
 			enemy = new Enemy("SAURON", GameObject::BOSS);
 			nextScene = SceneID::TREASURE_ROOM;
 			break;
 		case(TREASURE_ROOM) :
 			name = "TREASURE ROOM";
-			image = "images/courtyard.bmp";
+			image = "images/hall.bmp";
 			items.push_back(InventoryItem(GameObject::TREASURE));
 			nextScene = SceneID::TREASURE_ROOM;
 			break;

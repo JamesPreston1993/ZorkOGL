@@ -11,12 +11,14 @@ class Scene
 public:
 	enum SceneID
 	{
-		GATES = 0,
+		START = 0,
+		GATES,
 		TOWER,
 		COURTYARD,
 		BARRACKS,
 		MAIN_HALL,
-		TREASURE_ROOM
+		TREASURE_ROOM,
+		END
 	};
 	Scene();
 	Scene(SceneID id);

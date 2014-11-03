@@ -10,8 +10,6 @@ GUI::GUI(int width, int height)
 	panelWidth = (screenWidth - (4 * margin)) / 3;
 	panelHeight = (screenHeight - (3 * margin)) / 4;
 
-	SDL_ShowCursor(SDL_DISABLE);
-
 	setupWindow();
 }
 
@@ -28,9 +26,6 @@ void GUI::setupWindow()
 	// Set up display
 	SDL_Init(SDL_INIT_VIDEO);
 	TTF_Init();
-	
-	// Doesn't work for multiple displays 
-	//window = SDL_CreateWindow("ZorkOGL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenWidth, screenHeight, SDL_WINDOW_FULLSCREEN);
 	
 	window = SDL_CreateWindow("ZorkOGL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screenWidth, screenHeight, 0);
 
@@ -377,47 +372,6 @@ void GUI::drawGameScreen(Scene* currentScene)
 
 	// Create and draw scene
 	currentScene->drawScene(renderer, mainRect);
-
-	// Draw level title at top of page
-	SDL_Rect* titleRect = new SDL_Rect();
-	titleRect->x = (width / 2) - (panelWidth / 2);
-	titleRect->y = startY;
-	titleRect->w = panelWidth;
-	titleRect->h = 64;
-
-	TTF_Font* font = TTF_OpenFont("font/TerminusTTF-4.39.ttf", 18);
-	if(font == NULL)
-	{
-		cerr << "Font error: " << TTF_GetError() << endl;
-		TTF_Quit();
-		SDL_Quit();
-		exit(0);
-	}
 	
-	SDL_Color textColor = {255, 255, 255};
-	SDL_Surface* surface = NULL;
-	SDL_Texture* texture = NULL;
-
-	// Create surface
-	surface = TTF_RenderText_Solid(font, currentScene->getName().c_str(), textColor);
-	if(surface == NULL)
-	{
-		cerr << "Surface error: " << TTF_GetError() << endl;
-		TTF_Quit();
-		SDL_Quit();
-		exit(0);
-	}
-	
-	// Create texture and free surface as we are done with it
-	texture = SDL_CreateTextureFromSurface(renderer, surface);		
-	SDL_FreeSurface(surface);
-
-	// Render
-	SDL_RenderCopy(renderer,texture, NULL, titleRect);
-
-	// Free resources
-	SDL_DestroyTexture(texture);
 	delete mainRect;
-	delete titleRect;
-	TTF_CloseFont(font);
 }

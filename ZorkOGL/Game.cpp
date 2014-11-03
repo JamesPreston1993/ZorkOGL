@@ -60,6 +60,11 @@ void Game::run()
 				{
 					stateChanged = true;
 					attackTimer = 0;
+					if(player->getHealth() == 0)
+					{
+						isRunning = false;
+						SDL_ShowSimpleMessageBox(NULL,"Game Over", "You died!", NULL);
+					}
 				}
 			}
 			else

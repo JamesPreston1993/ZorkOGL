@@ -1,14 +1,12 @@
-﻿Build started 27/10/2014 10:28:21.
-     1>Project "C:\DevEnv\ZorkOGL\ZorkOGL\ZorkOGL.vcxproj" on node 2 (Build target(s)).
+﻿Build started 02/11/2014 16:10:00.
+     1>Project "C:\GitRepo\ZorkOGL\ZorkOGL\ZorkOGL.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\DevEnv\GamesDev\SDL\SDL2-2.0.3\include" /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt InputListener.cpp Player.cpp
-         Player.cpp
-     1>c:\devenv\zorkogl\zorkogl\player.cpp(52): warning C4018: '>' : signed/unsigned mismatch
-         InputListener.cpp
-     1>c:\devenv\zorkogl\zorkogl\inputlistener.cpp(91): warning C4018: '<' : signed/unsigned mismatch
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\DevEnv\GamesDev\SDL\SDL2-2.0.3\include" /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Enemy.cpp Game.cpp
+         Game.cpp
+         Enemy.cpp
          Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\DevEnv\ZorkOGL\Debug\ZorkOGL.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" SDL2.lib SDL2main.lib OpenGL32.lib SDL2_ttf.lib sdl2_image.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\DevEnv\ZorkOGL\Debug\ZorkOGL.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\DevEnv\ZorkOGL\Debug\ZorkOGL.lib" /MACHINE:X86 Debug\Character.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\GitRepo\ZorkOGL\Debug\ZorkOGL.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" SDL2.lib SDL2main.lib OpenGL32.lib SDL2_ttf.lib sdl2_image.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\GitRepo\ZorkOGL\Debug\ZorkOGL.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\GitRepo\ZorkOGL\Debug\ZorkOGL.lib" /MACHINE:X86 Debug\Character.obj
          Debug\Enemy.obj
          Debug\Game.obj
          Debug\GameObject.obj
@@ -16,11 +14,12 @@
          Debug\GUI.obj
          Debug\InputListener.obj
          Debug\InventoryItem.obj
+         Debug\Menu.obj
          Debug\Player.obj
          Debug\Scene.obj
-         ZorkOGL.vcxproj -> C:\DevEnv\ZorkOGL\Debug\ZorkOGL.exe
-     1>Done Building Project "C:\DevEnv\ZorkOGL\ZorkOGL\ZorkOGL.vcxproj" (Build target(s)).
+         ZorkOGL.vcxproj -> C:\GitRepo\ZorkOGL\Debug\ZorkOGL.exe
+     1>Done Building Project "C:\GitRepo\ZorkOGL\ZorkOGL\ZorkOGL.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.95
+Time Elapsed 00:00:10.56

@@ -317,7 +317,7 @@ void GUI::drawStats(int x, int y, int w, int h, Character* c)
 				message = "END: " + std::to_string(c->getEndurance());
 				break;
 			case 4 : 
-				message = "CHA: " + std::to_string(c->getCharisma());
+				message = "LCK: " + std::to_string(c->getLuck());
 				break;
 			case 5 :
 				if(c->getHealth() >= 100)

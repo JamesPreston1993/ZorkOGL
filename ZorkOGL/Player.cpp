@@ -4,16 +4,17 @@ Player::Player() : Character()
 {
 }
 
-Player::Player(std::string name, int strength, int agility, int endurance, int charisma) : Character(name, strength, agility, endurance, charisma)
+Player::Player(std::string name, int strength, int agility, int endurance, int luck) : Character(name, strength, agility, endurance, luck)
 {
 	this->setID(PLAYER);
 	this->setHUDImage("images/playerImg.bmp");
 	// Add items to inventory
+	this->inventory.push_back(InventoryItem(GameObject::SWORD));
 	this->inventory.push_back(InventoryItem(GameObject::HAND));
 	this->inventory.push_back(InventoryItem(GameObject::EYE));
-	this->inventory.push_back(InventoryItem(GameObject::SWORD));
 	currentItemIndex = 0;
 	this->currentItem = inventory.at(currentItemIndex);
+	this->blocking = false;
 }
 
 Player::~Player(void)
@@ -54,4 +55,17 @@ void Player::setCurrentItemIndex(int offset)
 		currentItemIndex = 0;
 	}
 	currentItem = inventory.at(currentItemIndex);
+}
+
+bool Player::isBlocking()
+{
+	return blocking;
+}
+
+void Player::setBlocking(bool blocking)
+{
+	if(blocking != this->blocking)
+	{
+		this->blocking = blocking;
+	}
 }

@@ -8,7 +8,7 @@ Game::Game(void)
 {	
 	isRunning = true;
 	stateChanged = true;
-	player = new Player("ARAGORN", 9, 2, 5, 6);
+	player = new Player("ARAGORN", 9, 2, 5, 7);
 	currentScene = new Scene(Scene::GATES);
 
 	// If the scene has an enemy, set the current enemy to that scene's main enemy
@@ -40,6 +40,9 @@ void Game::run()
 	// Create the GUI specifying the screen width and height
 	GUI gui(1280, 720);	
 
+	// Attack tiimer for enemy
+	int attackTimer = 0;
+
 	// Start the game loop
 	while(isRunning)
 	{		
@@ -48,6 +51,22 @@ void Game::run()
 		{
 			isRunning = false;
 		}		
+
+		if(enemySelected)
+		{
+			if(enemy->canAttack(attackTimer))
+			{
+				if(enemy->attack(player))
+				{
+					stateChanged = true;
+					attackTimer = 0;
+				}
+			}
+			else
+			{
+				attackTimer++;
+			}
+		}
 
 		// Render if the state has changed - avoids unnecessary rendering
 		if(stateChanged)

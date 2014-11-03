@@ -6,16 +6,16 @@ Character::Character() : GameObject()
 	this->strength = 1;
 	this->endurance = 1;
 	this->agility = 1;
-	this->charisma = 1;
+	this->luck = 1;
 	this->health = 100;
 }
-Character::Character(std::string name, int strength, int agility, int endurance, int charisma) : GameObject()
+Character::Character(std::string name, int strength, int agility, int endurance, int luck) : GameObject()
 {
 	this->name = name;
 	this->strength = strength;
 	this->endurance = endurance;
 	this->agility = agility;
-	this->charisma = charisma;
+	this->luck = luck;
 	this->health = 100;	
 }
 
@@ -64,14 +64,14 @@ void Character::setEndurance(int endurance)
 	this->endurance = endurance;
 }
 
-int Character::getCharisma()
+int Character::getLuck()
 {
-	return this->charisma;
+	return this->luck;
 }
 
-void Character::setCharisma(int charisma)
+void Character::setLuck(int luck)
 {
-	this->charisma = charisma;
+	this->luck = luck;
 }
 
 int Character::getHealth()

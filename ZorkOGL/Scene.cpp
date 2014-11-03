@@ -15,7 +15,6 @@ Scene::Scene(SceneID id)
 			name = "CASTLE GATES";
 			image = "images/stone.bmp";
 			enemy = new Enemy("HIGRON", GameObject::GUARD);
-			items.push_back(InventoryItem(GameObject::KEY));
 			items.push_back(InventoryItem(GameObject::MAP));
 			nextScene = SceneID::TOWER;
 			break;
@@ -28,7 +27,7 @@ Scene::Scene(SceneID id)
 		case(BARRACKS) :
 			name = "GUARD BARRACKS";
 			image = "images/courtyard.bmp";
-			enemy = new Enemy("TALON", GameObject::GUARD);
+			items.push_back(InventoryItem(GameObject::KEY));
 			nextScene = SceneID::COURTYARD;
 			break;
 		case(COURTYARD) :

@@ -6,7 +6,7 @@ class Character : public GameObject
 {
 public:
 	Character();
-	Character(std::string name, int strength, int agility, int endurance, int charisma);
+	Character(std::string name, int strength, int agility, int endurance, int luck);
 	~Character(void);
 
 	// Get & Set Strength
@@ -21,9 +21,9 @@ public:
 	int getEndurance();
 	void setEndurance(int endurance);
 	
-	// Get & Set Charisma
-	int getCharisma();
-	void setCharisma(int charisma);
+	// Get & Set luck
+	int getLuck();
+	void setLuck(int luck);
 		
 	// Get & Set Name
 	std::string getName();
@@ -43,7 +43,7 @@ private:
 	int strength;
 	int agility;
 	int endurance;
-	int charisma;		
+	int luck;		
 	int health;
 	std::string image;
 };

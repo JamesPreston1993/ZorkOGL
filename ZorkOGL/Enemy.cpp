@@ -1,11 +1,6 @@
 #include "Enemy.h"
 
-
-Enemy::Enemy()
-{
-}
-
-Enemy::Enemy(std::string name, ID id)
+Enemy::Enemy(string name, ID id)
 {
 	this->setName(name);
 	this->setID(id);
@@ -36,18 +31,14 @@ Enemy::Enemy(std::string name, ID id)
 	}
 }
 
-Enemy::~Enemy()
-{
-}
-
 void Enemy::dodge()
 {
 	int chance = rand() % 10 + 1;
 	if(this->getAgility() >= chance)
 	{
 		// Move character
-		int direction = rand() % 10 + 1;
-		if(direction > 5)
+		int direction = rand() % 100 + 1;
+		if(direction > 50)
 			this->setX(this->getX() + this->getWidth());
 		else
 			this->setX(this->getX() - this->getWidth());
@@ -67,7 +58,7 @@ bool Enemy::attack(Player* player)
 
 bool Enemy::canAttack(int time)
 {
-	if(10 * (10 - this->getEndurance()) <= time)
+	if(9 * (10 - this->getEndurance()) <= time)
 	{
 		return true;
 	}

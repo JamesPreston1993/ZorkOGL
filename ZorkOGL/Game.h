@@ -8,6 +8,7 @@ class Game
 public:
 	Game(void);
 	virtual ~Game(void);
+	
 	virtual void run();
 	void setStateChanged(bool state);
 	void setEnemySelected(bool selected);
@@ -16,6 +17,7 @@ public:
 	Enemy* getOpponent();
 	void setCurrentScene(Scene::SceneID nextScene);
 	Scene* getCurrentScene();
+
 private:
 	bool isRunning;
 	Player* player;

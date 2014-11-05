@@ -2,16 +2,20 @@
 #include <string>
 #include "GameObject.h"
 
+using std::string;
+
 class InventoryItem : public GameObject
 {
 public:
 	InventoryItem();
 	InventoryItem(ID id);
 	~InventoryItem(void);
+	
 	void drawToHUD(SDL_Renderer* renderer, int x, int y, int size);
-	std::string getName();
+	string getName();
+
 private:
-	std::string name;
+	string name;
 	int weight;
 	int value;
 };

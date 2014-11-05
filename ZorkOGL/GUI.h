@@ -13,6 +13,7 @@ class GUI
 public:
 	GUI(int width, int height);
 	virtual ~GUI(void);
+	
 	void setupWindow();
 	void setupRenderer();
 	void drawCharacter(Character* character);

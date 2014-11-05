@@ -9,9 +9,7 @@ Player::Player(std::string name, int strength, int agility, int endurance, int l
 	this->setID(PLAYER);
 	this->setHUDImage("images/playerImg.bmp");
 	// Add items to inventory
-	this->inventory.push_back(InventoryItem(GameObject::SWORD));
 	this->inventory.push_back(InventoryItem(GameObject::HAND));
-	this->inventory.push_back(InventoryItem(GameObject::EYE));
 	currentItemIndex = 0;
 	this->currentItem = inventory.at(currentItemIndex);
 }

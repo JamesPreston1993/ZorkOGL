@@ -11,6 +11,12 @@ Scene::Scene(SceneID id)
 	enemy = NULL;
 	switch(id)
 	{
+		case(START) :
+			name = "START";
+			image = "images/start.bmp";
+			items.push_back(InventoryItem(GameObject::SWORD));
+			nextScene = SceneID::GATES;
+			break;
 		case(GATES) :
 			name = "CASTLE GATES";
 			image = "images/gates.bmp";
@@ -49,6 +55,11 @@ Scene::Scene(SceneID id)
 			items.push_back(InventoryItem(GameObject::TREASURE));
 			nextScene = SceneID::TREASURE_ROOM;
 			break;
+		case(GAMEOVER) :
+			name = "GAME OVER";
+			image = "images/gameOver.bmp";
+			nextScene = SceneID::GAMEOVER;
+			break;
 	}
 }
 
@@ -67,16 +78,17 @@ void Scene::drawScene(SDL_Renderer* renderer, SDL_Rect* view)
 	SDL_RenderCopy(renderer,bkTexture, NULL, view);
 	SDL_DestroyTexture(bkTexture);
 
-	if(hasEnemies())
-	{
-		enemy->draw(renderer);
-	}
 	if(hasItems())
 	{
 		for(int i = 0; i < items.size(); i++)
 		{
 			items.at(i).draw(renderer);
 		}
+	}
+
+	if(hasEnemies())
+	{
+		enemy->draw(renderer);
 	}
 }
 

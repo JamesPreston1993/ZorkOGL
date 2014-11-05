@@ -9,27 +9,27 @@ Character::Character() : GameObject()
 	this->luck = 1;
 	this->health = 100;
 }
-Character::Character(std::string name, int strength, int agility, int endurance, int luck) : GameObject()
+Character::Character(string name, int strength, int agility, int endurance, int luck) : GameObject()
 {
 	this->name = name;
 	this->strength = strength;
 	this->endurance = endurance;
 	this->agility = agility;
 	this->luck = luck;
-	this->health = 100;	
+	this->health = 100;
 }
 
-Character::~Character(void)
+Character::~Character()
 {
-	// No pointers to delete
+
 }
 
-std::string Character::getName()
+string Character::getName()
 {
 	return this->name;
 }
 
-void Character::setName(std::string name)
+void Character::setName(string name)
 {
 	this->name = name;
 }
@@ -95,7 +95,7 @@ std::string Character::getHUDImage()
 {
 	return image;
 }
-void Character::setHUDImage(std::string image)
+void Character::setHUDImage(string image)
 {
 	this->image = image;
 }

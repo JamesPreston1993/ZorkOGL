@@ -1,5 +1,4 @@
 #include "GameObject.h"
-#include <string>
 
 GameObject::GameObject()
 {
@@ -87,8 +86,8 @@ void GameObject::setID(ID id)
 			height = 100;
 			break;
 		case MAP:
-			x = 200;
-			y= 200;
+			x = 700;
+			y = 400;
 			width = 100;
 			height = 100;
 			break;
@@ -98,12 +97,18 @@ void GameObject::setID(ID id)
 			width = 200;
 			height = 200;
 			break;
+		case SWORD:
+			x = 520;
+			y = 300;
+			width = 200;
+			height = 200;
+			break;
 	}
 }
 
 void GameObject::draw(SDL_Renderer* renderer)
 {
-	std::string imagePath = "images/";
+	string imagePath = "images/";
 	switch(id)
 	{
 		case PLAYER : 
@@ -126,7 +131,6 @@ void GameObject::draw(SDL_Renderer* renderer)
 			imagePath += "sword.gif"; break;
 		case TREASURE : 
 			imagePath += "treasureChest.gif"; break;
-		// TODO: Other items
 	}
 
 	SDL_Rect* pictureRect = new SDL_Rect();

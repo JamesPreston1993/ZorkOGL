@@ -6,6 +6,9 @@
 #include <SDL_image.h>
 #include <SDL.h>
 
+using std::string;
+using std::vector;
+
 class Scene
 {
 public:
@@ -18,26 +21,29 @@ public:
 		BARRACKS,
 		MAIN_HALL,
 		TREASURE_ROOM,
-		END
+		GAMEOVER
 	};
+	
 	Scene();
 	Scene(SceneID id);
 	~Scene();
+
 	void drawScene(SDL_Renderer* renderer, SDL_Rect* view);
 	SceneID getID();
-	std::vector<InventoryItem> getItems();
+	vector<InventoryItem> getItems();
 	Enemy* getEnemy();
 	bool hasEnemies();
 	bool hasItems();
 	void removeEnemy(Enemy* enemy);
 	void removeItem(InventoryItem item);
 	SceneID getNextScene();
-	std::string getName();
+	string getName();
 	bool isComplete();
+
 private:
-	std::string name;
-	std::string image;
-	std::vector<InventoryItem> items;
+	string name;
+	string image;
+	vector<InventoryItem> items;
 	Enemy* enemy;
 	SceneID id;
 	SceneID nextScene;

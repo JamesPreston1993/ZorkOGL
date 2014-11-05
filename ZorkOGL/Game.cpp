@@ -9,7 +9,7 @@ Game::Game(void)
 	isRunning = true;
 	stateChanged = true;
 	player = new Player("ARAGORN", 9, 2, 5, 7);
-	currentScene = new Scene(Scene::GATES);
+	currentScene = new Scene(Scene::START);
 
 	// If the scene has an enemy, set the current enemy to that scene's main enemy
 	// Otherwise, set to NULL
@@ -50,7 +50,7 @@ void Game::run()
 		if(!input->listen())
 		{
 			isRunning = false;
-		}		
+		}
 
 		if(enemySelected)
 		{
@@ -62,8 +62,7 @@ void Game::run()
 					attackTimer = 0;
 					if(player->getHealth() == 0)
 					{
-						isRunning = false;
-						SDL_ShowSimpleMessageBox(NULL,"Game Over", "You died!", NULL);
+						setCurrentScene(Scene::GAMEOVER);
 					}
 				}
 			}

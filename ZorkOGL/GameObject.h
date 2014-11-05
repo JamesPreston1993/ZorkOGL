@@ -1,6 +1,9 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
+#include <string>
+
+using std::string;
 
 class GameObject
 {
@@ -22,8 +25,9 @@ public:
 		// Default
 		NONE
 	};
+	
 	GameObject();	
-	~GameObject();
+	virtual  ~GameObject() = 0;
 
 	int getX();
 	void setX(int x);

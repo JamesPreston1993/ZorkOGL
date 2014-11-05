@@ -227,22 +227,19 @@ void GUI::drawControls(int x, int y, int w, int h, Player* player)
 	SDL_Surface* surface = NULL;
 	SDL_Texture* texture = NULL;
 
-	for(int i = 0; i < 4; i++)
+	for(int i = 0; i < 3; i++)
 	{
 		std::string message;
 		switch(i)
 		{
-			case 0 : 
+			case 0 :
+				message = " ITEM: ";
+				break;
+			case 1 : 
 				message = player->getCurrentItem().getName();
 				break;
-			case 1 :
-				message = "Z/X: NEXT";
-				break;
 			case 2 :
-				message = "F  : USE ";
-				break;
-			case 3 :
-				message = "ESC: QUIT";
+				message = "Z/X: NEXT";
 				break;			
 			default:
 				message = "";
@@ -265,7 +262,7 @@ void GUI::drawControls(int x, int y, int w, int h, Player* player)
 		// Create a rectangle for the Texture
 		SDL_Rect* title = new SDL_Rect();
 		title->x = x;
-		title->y = y + ((h / 4) * i);
+		title->y = y + ((h / 3) * i);
 		title->w = w;
 		title->h = h / 4;
 

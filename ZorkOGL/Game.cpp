@@ -1,10 +1,8 @@
 #include "Game.h"
 #include "GUI.h"
-#include "GameObject.h"
 #include "InputListener.h"
-#include <SDL.h>
 
-Game::Game(void)
+Game::Game()
 {	
 	isRunning = true;
 	stateChanged = true;
@@ -25,7 +23,7 @@ Game::Game(void)
 	}
 }
 
-Game::~Game(void)
+Game::~Game()
 {		
 	delete player;
 	delete currentScene;
@@ -98,7 +96,7 @@ void Game::run()
 	delete input;
 }
 
-void Game::setStateChanged(bool state)
+void Game::setStateChanged(const bool state)
 {
 	if(state != stateChanged)
 	{
@@ -106,7 +104,7 @@ void Game::setStateChanged(bool state)
 	}
 }
 
-void Game::setEnemySelected(bool selected)
+void Game::setEnemySelected(const bool selected)
 {
 	if(selected != enemySelected)
 	{
@@ -128,7 +126,7 @@ Enemy* Game::getOpponent()
 	return enemy;
 }
 
-void Game::setCurrentScene(Scene::SceneID newScene)
+void Game::setCurrentScene(const Scene::SceneID newScene)
 {
 	if(newScene != currentScene->getID())
 	{

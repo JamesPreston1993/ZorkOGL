@@ -1,52 +1,56 @@
 #pragma once
-#include <string>
 #include "GameObject.h"
-
-using std::string;
 
 class Character : public GameObject
 {
 public:
+	// No args constructor
 	Character();
-	Character(string name, int strength, int agility, int endurance, int luck);
+	
+	// Constructor with name and stats
+	Character(const string name, const int strength, const int agility, const int endurance, const int luck);
+	
+	// Pure virtual destructor to make class abstract
 	virtual ~Character() = 0;
 
 	// Get & Set Strength
 	int getStrength();
-	void setStrength(int strength);
+	void setStrength(const int strength);
 	
 	// Get & Set Agility
 	int getAgility();
-	void setAgility(int agility);
+	void setAgility(const int agility);
 	
 	// Get & Set Endurance
 	int getEndurance();
-	void setEndurance(int endurance);
+	void setEndurance(const int endurance);
 	
 	// Get & Set luck
 	int getLuck();
-	void setLuck(int luck);
+	void setLuck(const int luck);
 		
 	// Get & Set Name
 	string getName();
-	void setName(string name);
+	void setName(const string name);
 
 	// Get & Set Health
 	int getHealth();
-	void setHealth(int health);
+	void setHealth(const int health);
 
 	// Get & Set Image
 	string getHUDImage();
-	void setHUDImage(string image);
+	void setHUDImage(const string image);
 
 private:
-	// Skills
+	// Character name
 	string name;
+	// Character stats
 	int strength;
 	int agility;
 	int endurance;
 	int luck;		
 	int health;
+	// File path of HUD image
 	string image;
 };
 

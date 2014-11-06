@@ -5,7 +5,7 @@ Scene::Scene()
 	
 }
 
-Scene::Scene(SceneID id)
+Scene::Scene(const SceneID id)
 {
 	this->id = id;
 	enemy = NULL;
@@ -70,7 +70,7 @@ Scene::~Scene()
 		delete enemy;
 }
 
-void Scene::drawScene(SDL_Renderer* renderer, SDL_Rect* view)
+void Scene::drawScene(SDL_Renderer* const renderer, SDL_Rect* const view)
 {
 	SDL_Surface* bkImage = SDL_LoadBMP(image.c_str());
 	SDL_Texture* bkTexture = SDL_CreateTextureFromSurface(renderer, bkImage);
@@ -146,7 +146,8 @@ Scene::SceneID Scene::getNextScene()
 {
 	return nextScene;
 }
-std::string Scene::getName()
+
+string Scene::getName()
 {
 	return name;
 }

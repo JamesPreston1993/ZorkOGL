@@ -15,7 +15,7 @@ int GameObject::getX()
 	return this->x;
 }
 
-void GameObject::setX(int x)
+void GameObject::setX(const int x)
 {
 	if(x >= 0 && x <= 1280 - width)
 		this->x = x;
@@ -26,7 +26,7 @@ int GameObject::getY()
 	return this->y;
 }
 
-void GameObject::setY(int y)
+void GameObject::setY(const int y)
 {
 	this->y = y;
 }
@@ -36,7 +36,7 @@ int GameObject::getWidth()
 	return this->width;
 }
 
-void GameObject::setWidth(int width)
+void GameObject::setWidth(const int width)
 {
 	this->width = width;
 }
@@ -46,7 +46,7 @@ int GameObject::getHeight()
 	return this->height;
 }
 
-void GameObject::setHeight(int height)
+void GameObject::setHeight(const int height)
 {
 	this->height = height;
 }
@@ -56,7 +56,7 @@ GameObject::ID GameObject::getID()
 	return this->id;
 }
 
-void GameObject::setID(ID id)
+void GameObject::setID(const ID id)
 {
 	this->id = id;
 	switch(id)
@@ -106,7 +106,7 @@ void GameObject::setID(ID id)
 	}
 }
 
-void GameObject::draw(SDL_Renderer* renderer)
+void GameObject::draw(SDL_Renderer* const renderer)
 {
 	string imagePath = "images/";
 	switch(id)

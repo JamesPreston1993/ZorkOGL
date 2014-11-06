@@ -1,21 +1,20 @@
 #pragma once
-#include "Player.h"
 #include "Enemy.h"
 #include "Scene.h"
 
 class Game
 {
 public:
-	Game(void);
-	virtual ~Game(void);
+	Game();
+	virtual ~Game();
 	
 	virtual void run();
-	void setStateChanged(bool state);
-	void setEnemySelected(bool selected);
+	void setStateChanged(const bool state);
+	void setEnemySelected(const bool selected);
 	bool getEnemySelected();
 	Player* getPlayer();
 	Enemy* getOpponent();
-	void setCurrentScene(Scene::SceneID nextScene);
+	void setCurrentScene(const Scene::SceneID nextScene);
 	Scene* getCurrentScene();
 
 private:

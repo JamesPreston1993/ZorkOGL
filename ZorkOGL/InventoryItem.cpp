@@ -5,7 +5,7 @@ InventoryItem::InventoryItem() : GameObject()
 {
 }
 
-InventoryItem::InventoryItem(ID id) : GameObject()
+InventoryItem::InventoryItem(const ID id) : GameObject()
 {
 	switch(id)
 	{
@@ -48,18 +48,14 @@ InventoryItem::InventoryItem(ID id) : GameObject()
 	}
 }
 
-InventoryItem::~InventoryItem(void)
-{
-}
-
-std::string InventoryItem::getName()
+string InventoryItem::getName()
 {
 	return this->name;
 }
 
-void InventoryItem::drawToHUD(SDL_Renderer* renderer, int x, int y, int size)
+void InventoryItem::drawToHUD(SDL_Renderer* const renderer, const int x, const int y, const int size)
 {
-	std::string imagePath = "images/";
+	string imagePath = "images/";
 	switch(this->getID())
 	{
 		case KEY : 

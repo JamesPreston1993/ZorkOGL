@@ -1,9 +1,6 @@
 #include "GUI.h"
 
-using std::cerr;
-using std::endl;
-
-GUI::GUI(int width, int height)
+GUI::GUI(const int width, const int height)
 {
 	screenWidth = width;
 	screenHeight = height;
@@ -13,7 +10,7 @@ GUI::GUI(int width, int height)
 	setupWindow();
 }
 
-GUI::~GUI(void)
+GUI::~GUI()
 {
 	clear();
 	SDL_DestroyRenderer(renderer);
@@ -31,7 +28,7 @@ void GUI::setupWindow()
 
 	if(window == NULL)
 	{
-		cerr << "Window error: " << TTF_GetError() << endl;
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "WINDOW ERROR", SDL_GetError(), NULL);		
 		TTF_Quit();
 		SDL_Quit();
 		exit(0);
@@ -45,7 +42,7 @@ void GUI::setupRenderer()
     
 	if(renderer == NULL)
 	{
-		cerr << "Renderer error: " << TTF_GetError() << endl;
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "RENDERER ERROR", SDL_GetError(), NULL);
 		TTF_Quit();
 		SDL_Quit();
 		exit(0);
@@ -69,7 +66,7 @@ void GUI::clear()
 	SDL_RenderClear(renderer);
 }
 
-void GUI::drawCharacter(Character* character)
+void GUI::drawCharacter(Character* const character)
 {
 	int startX, startY;
 	if(character->getID() == GameObject::PLAYER)
@@ -93,7 +90,9 @@ void GUI::drawCharacter(Character* character)
 	SDL_Surface* bkImage = SDL_LoadBMP("images/stone2.bmp");
 	if (bkImage == NULL)
 	{
-		cerr << "SDL_LoadBMP() Failed: " << SDL_GetError() << endl;
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LOAD IMAGE ERROR", SDL_GetError(), NULL);
+		TTF_Quit();
+		SDL_Quit();
 		exit(0);
 	}
 	SDL_Texture* bkTexture = SDL_CreateTextureFromSurface(renderer, bkImage);
@@ -111,7 +110,9 @@ void GUI::drawCharacter(Character* character)
 	SDL_Surface* image = SDL_LoadBMP(character->getHUDImage().c_str());
 	if (image == NULL)
 	{
-		cerr << "SDL_LoadBMP() Failed: " << SDL_GetError() << endl;
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LOAD IMAGE ERROR", SDL_GetError(), NULL);
+		TTF_Quit();
+		SDL_Quit();
 		exit(0);
 	}
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, image);
@@ -139,7 +140,9 @@ void GUI::drawCharacter()
 	SDL_Surface* bkImage = SDL_LoadBMP("images/stone2.bmp");
 	if (bkImage == NULL)
 	{
-		cerr << "SDL_LoadBMP() Failed: " << SDL_GetError() << endl;
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LOAD IMAGE ERROR", SDL_GetError(), NULL);
+		TTF_Quit();
+		SDL_Quit();
 		exit(0);
 	}
 	SDL_Texture* bkTexture = SDL_CreateTextureFromSurface(renderer, bkImage);
@@ -150,7 +153,7 @@ void GUI::drawCharacter()
 	delete mainRect;
 }
 
-void GUI::drawInventory(Player* player)
+void GUI::drawInventory(Player* const player)
 {
 	int startX = panelWidth + (2 * margin);
 	int startY = screenHeight - panelHeight;
@@ -164,7 +167,9 @@ void GUI::drawInventory(Player* player)
 	SDL_Surface* bkImage = SDL_LoadBMP("images/stone2.bmp");
 	if (bkImage == NULL)
 	{
-		cerr << "SDL_LoadBMP() Failed: " << SDL_GetError() << endl;
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LOAD IMAGE ERROR", SDL_GetError(), NULL);
+		TTF_Quit();
+		SDL_Quit();
 		exit(0);
 	}
 	SDL_Texture* bkTexture = SDL_CreateTextureFromSurface(renderer, bkImage);
@@ -212,12 +217,12 @@ void GUI::drawInventory(Player* player)
 	delete mainRect;
 }
 
-void GUI::drawControls(int x, int y, int w, int h, Player* player)
+void GUI::drawControls(const int x, const int y, const int width, const int height, Player* const player)
 {
 	TTF_Font* font = TTF_OpenFont("font/TerminusTTF-4.39.ttf", 18);
 	if(font == NULL)
 	{
-		cerr << "Font error: " << TTF_GetError() << endl;
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LOAD FONT ERROR", SDL_GetError(), NULL);
 		TTF_Quit();
 		SDL_Quit();
 		exit(0);
@@ -229,7 +234,7 @@ void GUI::drawControls(int x, int y, int w, int h, Player* player)
 
 	for(int i = 0; i < 3; i++)
 	{
-		std::string message;
+		string message;
 		switch(i)
 		{
 			case 0 :
@@ -250,7 +255,7 @@ void GUI::drawControls(int x, int y, int w, int h, Player* player)
 		surface = TTF_RenderText_Solid(font, message.c_str(), textColor);
 		if(surface == NULL)
 		{
-			cerr << "Surface error: " << TTF_GetError() << endl;
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LOAD SURFACE ERROR", SDL_GetError(), NULL);		
 			TTF_Quit();
 			SDL_Quit();
 			exit(0);
@@ -262,9 +267,9 @@ void GUI::drawControls(int x, int y, int w, int h, Player* player)
 		// Create a rectangle for the Texture
 		SDL_Rect* title = new SDL_Rect();
 		title->x = x;
-		title->y = y + ((h / 3) * i);
-		title->w = w;
-		title->h = h / 4;
+		title->y = y + ((height / 3) * i);
+		title->w = width;
+		title->h = height / 4;
 
 		// Render
 		SDL_RenderCopy(renderer,texture, NULL, title);
@@ -281,7 +286,7 @@ void GUI::drawStats(int x, int y, int w, int h, Character* c)
 	TTF_Font* font = TTF_OpenFont("font/TerminusTTF-4.39.ttf", 18);
 	if(font == NULL)
 	{
-		cerr << "Font error: " << TTF_GetError() << endl;
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LOAD FONT ERROR", SDL_GetError(), NULL);
 		TTF_Quit();
 		SDL_Quit();
 		exit(0);
@@ -293,7 +298,7 @@ void GUI::drawStats(int x, int y, int w, int h, Character* c)
 
 	for(int i = 0; i < 6; i++)
 	{
-		std::string message;
+		string message;
 		switch(i)
 		{
 			case 0 : 
@@ -328,9 +333,9 @@ void GUI::drawStats(int x, int y, int w, int h, Character* c)
 		surface = TTF_RenderText_Solid(font, message.c_str(), textColor);
 		if(surface == NULL)
 		{
-			cerr << "Surface error: " << TTF_GetError() << endl;
-			TTF_Quit();
-			SDL_Quit();
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LOAD SURFACE ERROR", SDL_GetError(), NULL);
+		TTF_Quit();
+		SDL_Quit();
 			exit(0);
 		}
 		// Create texture and free surface as we are done with it

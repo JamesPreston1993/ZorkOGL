@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 #include <vector>
 #include "InventoryItem.h"
 #include "Enemy.h"
@@ -25,16 +24,16 @@ public:
 	};
 	
 	Scene();
-	Scene(SceneID id);
+	Scene(const SceneID id);
 	~Scene();
 
-	void drawScene(SDL_Renderer* renderer, SDL_Rect* view);
+	void drawScene(SDL_Renderer* const renderer, SDL_Rect* const view);
 	SceneID getID();
 	vector<InventoryItem> getItems();
 	Enemy* getEnemy();
 	bool hasEnemies();
 	bool hasItems();
-	void removeEnemy(Enemy* enemy);
+	void removeEnemy(Enemy* const enemy);
 	void removeItem(InventoryItem item);
 	SceneID getNextScene();
 	string getName();

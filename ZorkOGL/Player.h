@@ -8,15 +8,13 @@ using std::vector;
 class Player : public Character
 {
 public:
-	Player();
-	Player(string name, int strength, int agility, int endurance, int luck);
-	~Player(void);
+	Player(const string name, const int strength, const int agility, const int endurance, const int luck);
 	
-	void addToInventory(InventoryItem item);
+	void addToInventory(const InventoryItem item);
 	vector<InventoryItem> getInventory();
 	InventoryItem getCurrentItem();
 	int getCurrentItemIndex();
-	void setCurrentItemIndex(int offset);
+	void setCurrentItemIndex(const int offset);
 
 private:
 	vector<InventoryItem> inventory;

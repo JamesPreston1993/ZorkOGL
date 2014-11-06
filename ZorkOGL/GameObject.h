@@ -30,17 +30,17 @@ public:
 	virtual  ~GameObject() = 0;
 
 	int getX();
-	void setX(int x);
+	void setX(const int x);
 	int getY();
-	void setY(int y);
+	void setY(const int y);
 	int getWidth();
-	void setWidth(int width);
+	void setWidth(const int width);
 	int getHeight();
-	void setHeight(int height);
+	void setHeight(const int height);
 	ID getID();
-	void setID(ID id);
-	void draw(SDL_Renderer* renderer);
-	bool mouseInside(int mouseX, int mouseY);
+	void setID(const ID id);
+	void draw(SDL_Renderer* const renderer);
+	bool mouseInside(const int mouseX, const int mouseY);
 private:
 	int x;
 	int y;

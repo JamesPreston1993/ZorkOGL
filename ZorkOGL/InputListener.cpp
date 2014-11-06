@@ -40,7 +40,7 @@ bool InputListener::listen()
 	return true;
 }
 
-bool InputListener::getKeyboardInput (SDL_Event event)
+bool InputListener::getKeyboardInput (const SDL_Event event)
 {
 	if(event.type == SDL_KEYDOWN)
 	{
@@ -65,7 +65,7 @@ bool InputListener::getKeyboardInput (SDL_Event event)
 	return true;
 }
 
-void InputListener::getMouseInput(SDL_Event event)
+void InputListener::getMouseInput(const SDL_Event event)
 {
 	if(event.type == SDL_MOUSEBUTTONDOWN)
 	{

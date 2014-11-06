@@ -1,10 +1,6 @@
 #include "Player.h"
 
-Player::Player() : Character()
-{
-}
-
-Player::Player(std::string name, int strength, int agility, int endurance, int luck) : Character(name, strength, agility, endurance, luck)
+Player::Player(const string name, const int strength, const int agility, const int endurance, const int luck) : Character(name, strength, agility, endurance, luck)
 {
 	this->setID(PLAYER);
 	this->setHUDImage("images/playerImg.bmp");
@@ -14,12 +10,7 @@ Player::Player(std::string name, int strength, int agility, int endurance, int l
 	this->currentItem = inventory.at(currentItemIndex);
 }
 
-Player::~Player(void)
-{
-
-}
-
-void Player::addToInventory(InventoryItem item)
+void Player::addToInventory(const InventoryItem item)
 {
 	if(inventory.size() < 9)
 	{
@@ -40,7 +31,7 @@ int Player::getCurrentItemIndex()
 {
 	return currentItemIndex;
 }
-void Player::setCurrentItemIndex(int offset)
+void Player::setCurrentItemIndex(const int offset)
 {
 	currentItemIndex += offset;
 	if(currentItemIndex < 0)

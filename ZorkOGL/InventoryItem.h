@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 #include "GameObject.h"
 
 using std::string;
@@ -8,10 +7,9 @@ class InventoryItem : public GameObject
 {
 public:
 	InventoryItem();
-	InventoryItem(ID id);
-	~InventoryItem(void);
+	InventoryItem(const ID id);
 	
-	void drawToHUD(SDL_Renderer* renderer, int x, int y, int size);
+	void drawToHUD(SDL_Renderer* const renderer, const int x, const int y, const int size);
 	string getName();
 
 private:

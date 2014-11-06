@@ -1,5 +1,6 @@
 #pragma once
 #include "Game.h"
+
 class InputListener
 {
 public:
@@ -10,7 +11,7 @@ public:
 
 private:
 	Game* game;
-	bool getKeyboardInput(SDL_Event event);
-	void getMouseInput(SDL_Event event);
+	bool getKeyboardInput(const SDL_Event event);
+	void getMouseInput(const SDL_Event event);
 };
 

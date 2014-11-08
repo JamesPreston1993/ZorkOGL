@@ -1,8 +1,11 @@
 #include "InventoryItem.h"
-#include <SDL_image.h>
 
+// No args constructor
 InventoryItem::InventoryItem() : GameObject()
 {
+	weight = value = 0;
+	name = "EMPTY";
+	this->setID(GameObject::NONE);
 }
 
 InventoryItem::InventoryItem(const ID id) : GameObject()
@@ -18,12 +21,6 @@ InventoryItem::InventoryItem(const ID id) : GameObject()
 		case HAND :
 			this->setID(id);
 			this->name = "HAND";
-			this->weight = 0;
-			this->value = 0;
-			break;
-		case EYE:
-			this->setID(id);
-			this->name = "EYE";
 			this->weight = 0;
 			this->value = 0;
 			break;
@@ -62,8 +59,6 @@ void InventoryItem::drawToHUD(SDL_Renderer* const renderer, const int x, const i
 			imagePath += "key.gif"; break;
 		case HAND : 
 			imagePath += "hand.gif"; break;
-		case EYE : 
-			imagePath += "eye.gif"; break;
 		case MAP : 
 			imagePath += "map.gif"; break;
 		case SWORD:

@@ -8,7 +8,7 @@ using std::string;
 class GameObject
 {
 public:
-	//Each GameObject has an ID that determines what it is and what it does
+	// Each GameObject has an ID that determines what it is and what it does
 	enum ID
 	{
 		// Characters

@@ -126,3 +126,27 @@ void Character::setHUDImage(const string image)
 {
 	this->image = image;
 }
+
+// Overloaded less than operator
+bool operator<(const Character &a, const Character &b)
+{
+	// Get the total of each chracter's stats and health and compare them
+	int aStats = a.strength + a.agility + a.endurance + a.luck + a.health;
+	int bStats = b.strength + b.agility + b.endurance + b.luck + b.health;
+
+	if(aStats < bStats)
+		return true;
+	return false;
+}
+
+// Overloaded greater than operator
+bool operator>(const Character &a, const Character &b)
+{
+	// Get the total of each chracter's stats and health and compare them
+	int aStats = a.strength + a.agility + a.endurance + a.luck + a.health;
+	int bStats = b.strength + b.agility + b.endurance + b.luck + b.health;
+
+	if(aStats > bStats)
+		return true;
+	return false;
+}

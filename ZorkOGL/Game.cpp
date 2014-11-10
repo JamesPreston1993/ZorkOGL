@@ -22,7 +22,7 @@ Game::Game()
 	{
 		enemy = NULL;
 		enemySelected = false;
-	}
+	}	
 }
 
 // Deletes all pointers in the class
@@ -112,7 +112,7 @@ void Game::run()
 			// If the scene has an enemy, their stats will be displayed
 			// Otherwise, an empty panel is displayed
 			if(enemySelected)
-				gui.drawCharacter(enemy);
+				gui.drawCharacter(enemy);				
 			else
 				gui.drawCharacter();
 			

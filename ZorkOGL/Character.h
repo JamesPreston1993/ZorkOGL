@@ -41,6 +41,10 @@ public:
 	string getHUDImage();
 	void setHUDImage(const string image);
 
+	// Overloaded comparison operators
+	friend bool operator<(const Character &a, const Character &b);
+	friend bool operator>(const Character &a, const Character &b);
+
 private:
 	// Character name
 	string name;

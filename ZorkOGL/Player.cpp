@@ -12,6 +12,7 @@ Player::Player(const string name, const int strength, const int agility, const i
 	
 	// Set the current item as the first item in the player's inventory
 	currentItemIndex = 0;
+	currentItem = inventory.at(0);
 }
 
 // Adds an item to the player's inventory

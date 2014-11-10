@@ -322,6 +322,7 @@ void GUI::drawControls(const int x, const int y, const int width, const int heig
 	SDL_Surface* surface = NULL;
 	SDL_Texture* texture = NULL;
 
+	// Choose the text based on the row number
 	for(int i = 0; i < 3; i++)
 	{
 		string message;
@@ -353,8 +354,10 @@ void GUI::drawControls(const int x, const int y, const int width, const int heig
 			exit(0);
 		}
 		
-		// Create texture and free surface as we are done with it
+		// Create texture from surface
 		texture = SDL_CreateTextureFromSurface(renderer, surface);		
+		
+		// Free surface to free up memory
 		SDL_FreeSurface(surface);
 		
 		// Create a rectangle for the Texture
@@ -367,8 +370,10 @@ void GUI::drawControls(const int x, const int y, const int width, const int heig
 		// Render to screen
 		SDL_RenderCopy(renderer,texture, NULL, title);
 
-		// Destroy the title rectangle and texture when we are done with them
+		// Delete the title rectangle to free up memory
 		delete title;
+
+		// Destroy texture to free up memory
 		SDL_DestroyTexture(texture);
 	}
 	
@@ -379,7 +384,10 @@ void GUI::drawControls(const int x, const int y, const int width, const int heig
 // Draw the character's stats to HUD
 void GUI::drawStats(int x, int y, int w, int h, Character* c)
 {
+	// Load the font
 	TTF_Font* font = TTF_OpenFont("font/TerminusTTF-4.39.ttf", 18);
+	
+	// If the font can't be loaded quit the application
 	if(font == NULL)
 	{
 		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LOAD FONT ERROR", SDL_GetError(), NULL);
@@ -388,10 +396,12 @@ void GUI::drawStats(int x, int y, int w, int h, Character* c)
 		exit(0);
 	}
 	
+	// Create a text color and initialise surface and texture
 	SDL_Color textColor = {255, 255, 255};
 	SDL_Surface* surface = NULL;
 	SDL_Texture* texture = NULL;
 
+	// Choose the text based on the row number
 	for(int i = 0; i < 6; i++)
 	{
 		string message;
@@ -413,6 +423,7 @@ void GUI::drawStats(int x, int y, int w, int h, Character* c)
 				message = "LCK: " + std::to_string(c->getLuck());
 				break;
 			case 5 :
+				// Formatting for screen
 				if(c->getHealth() >= 100)
 					message = "HP:" + std::to_string(c->getHealth());
 				else if (c->getHealth() < 10)
@@ -427,42 +438,55 @@ void GUI::drawStats(int x, int y, int w, int h, Character* c)
 		
 		// Create surface
 		surface = TTF_RenderText_Solid(font, message.c_str(), textColor);
+		
+		// If the image can't be load quit the application
 		if(surface == NULL)
 		{
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "LOAD SURFACE ERROR", SDL_GetError(), NULL);
-		TTF_Quit();
-		SDL_Quit();
+			TTF_Quit();
+			SDL_Quit();
 			exit(0);
 		}
-		// Create texture and free surface as we are done with it
+		
+		// Create texture from surface
 		texture = SDL_CreateTextureFromSurface(renderer, surface);		
+		
+		// Free surface to free up memory
 		SDL_FreeSurface(surface);
 		
-		// Create a rectangle for the Texture
+		// Create a rectangle for the text
 		SDL_Rect* title = new SDL_Rect();
 		title->x = x + (2 * margin) + w;
 		title->y = y + ((h / 6) * i);
 		title->w = panelWidth - (w + margin);
 		title->h = h / 6;
 
-		// Render
+		// Render to screen
 		SDL_RenderCopy(renderer,texture, NULL, title);
 
-		// Destroy the title rectangle and texture when we are done with them
+		// Delete the title rectangle to free up memory
 		delete title;
+
+		// Destroy texture to free up memory
 		SDL_DestroyTexture(texture);
 	}
+
+	// Close the font to free up memory
 	TTF_CloseFont(font);
 }
 
 // Draw the game screen
 void GUI::drawGameScreen(Scene* currentScene)
 {
+	// The X and Y co-ordinates where the panel will start drawing from 
 	int startX = margin;
 	int startY = margin;
+	
+	// The width and height of the game screen
 	int width = screenWidth - (2 * margin);
 	int height = screenHeight - panelHeight - (2 * margin);
 
+	// Draw the holder rectangle
 	SDL_Rect* mainRect = new SDL_Rect();
 	mainRect->x = startX;
 	mainRect->y = startY;
@@ -472,5 +496,6 @@ void GUI::drawGameScreen(Scene* currentScene)
 	// Create and draw scene
 	currentScene->drawScene(renderer, mainRect);
 	
+	// Delete the rectangle to free up memory
 	delete mainRect;
 }

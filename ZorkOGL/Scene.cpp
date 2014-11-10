@@ -50,7 +50,7 @@ Scene::Scene(const SceneID id)
 			break;
 		case(TREASURE_ROOM) :
 			name = "TREASURE ROOM";
-			image = "images/hall.bmp";
+			image = "images/win.bmp";
 			items.push_back(InventoryItem(GameObject::TREASURE));
 			nextScene = SceneID::TREASURE_ROOM;
 			break;

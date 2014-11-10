@@ -116,8 +116,8 @@ void GameObject::setID(const ID id)
 			height = 100;
 			break;
 		case TREASURE:
-			x = 600;
-			y = 200;
+			x = 540;
+			y = 300;
 			width = 200;
 			height = 200;
 			break;
